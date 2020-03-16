@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 25, y: 25}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -70,8 +70,8 @@ Material:
     - _LightIntensity: -0.043
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseShadowThreshold: 0.624
-    - _NoiseTransparency: 1
+    - _NoiseShadowThreshold: 0.63
+    - _NoiseTransparency: 0.368
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RimAmount: 0.458
@@ -83,7 +83,7 @@ Material:
     - _SpecularPower: 21.9
     - _SpecularStrenght: 0.237
     - _SrcBlend: 1
-    - _TextureTransparency: 0
+    - _TextureTransparency: 0.16
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
@@ -92,5 +92,5 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _NoiseScroll: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ScrollSpeed: {r: -0.1, g: -0.1, b: 0, a: 0}
+    - _ScrollSpeed: {r: -0.05, g: -0.05, b: 0, a: 0}
     - _WaveLightGlow: {r: 1, g: 0, b: 0, a: 1}

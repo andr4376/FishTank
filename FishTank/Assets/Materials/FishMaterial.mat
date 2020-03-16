@@ -80,12 +80,12 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RimAmount: 0.094
-    - _RimStrenght: 1
+    - _RimStrenght: 0.565
     - _RimThreshold: 0.958
     - _ShadowSoftness: 0.0097
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SpecularPower: 45.2
+    - _SpecularPower: 100
     - _SpecularStrenght: 0.821
     - _Speed: 5.7
     - _SpeedX: 0
