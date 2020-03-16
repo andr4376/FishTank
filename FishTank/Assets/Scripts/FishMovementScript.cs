@@ -26,6 +26,8 @@ public class FishMovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         //Move in direction that the fish is pointing
         //BoidsAgent will change its rotation
         //So it will avoid obstacles and flock around its comrads

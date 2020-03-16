@@ -42,6 +42,7 @@ SubShader{
 		Tags{ "RenderType" = "Opaque" 
 		"LightMode" = "ForwardBase"}
 		
+		Cull Off
 
 	Pass{
 
@@ -194,7 +195,7 @@ SubShader{
 				float4 texColor = tex2D(_MainTex, i.uv) ;
 
 				//Primary color is ambient color mixed with texture 
-				float4 color =	(_AmbientColor + texColor); 
+				float4 color =	(_AmbientColor * texColor); 
 
 				//Rim, Specular and light color 
 				float4 lightFactor = 

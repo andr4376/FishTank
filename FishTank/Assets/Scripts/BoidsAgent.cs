@@ -34,14 +34,22 @@ public class BoidsAgent : MonoBehaviour
         }
     }
 
+    Transform tf;
+
     // Start is called before the first frame update
     void Start()
+    {
+        Init();
+
+        stats = GetComponent<BoidStats>();
+
+    }
+
+    protected virtual void Init()
     {
         //For Hierarchy management
         //All boids will appear under the a game object
         transform.SetParent(BoidAnchor, true);
-
-        stats = GetComponent<BoidStats>();
 
     }
 
@@ -51,7 +59,7 @@ public class BoidsAgent : MonoBehaviour
 
     }
 
-    public void CalculateDirection(List<BoidsAgent> otherBoids)
+    public virtual void CalculateDirection(List<BoidsAgent> otherBoids)
     {
         List<BoidsAgent> boidsInRange = new List<BoidsAgent>();
 
@@ -88,7 +96,7 @@ public class BoidsAgent : MonoBehaviour
 
 
 
-    private void Alignment(List<BoidsAgent> boidsInRange)
+    protected virtual void Alignment(List<BoidsAgent> boidsInRange)
     {
         Vector3 averageRotation = Vector3.zero;
 
@@ -114,7 +122,7 @@ public class BoidsAgent : MonoBehaviour
 
     }
 
-    private void Cohesion(List<BoidsAgent> boidsInRange,
+    protected virtual void Cohesion(List<BoidsAgent> boidsInRange,
         bool headingForColision = false)
     {
 
@@ -147,7 +155,7 @@ public class BoidsAgent : MonoBehaviour
     }
 
 
-    private void Avoidance(List<BoidsAgent> boidsInRange)
+    protected virtual void Avoidance(List<BoidsAgent> boidsInRange)
     {
         Vector3 othersCenterMass = Vector3.zero;
         int count = 0;
@@ -175,7 +183,7 @@ public class BoidsAgent : MonoBehaviour
     }
 
 
-    private bool ObstacleDetection()
+    protected virtual bool ObstacleDetection()
     {/*
         Ray[] rayArray = new Ray[]{
         new Ray(transform.position, transform.right)
@@ -368,7 +376,7 @@ public class BoidsAgent : MonoBehaviour
 #endif
     }
 
-    private void SteerInDirection(Vector3 point, float modifier = 1)
+    protected void SteerInDirection(Vector3 point, float modifier = 1)
     {
         if (Mathf.Approximately(modifier, 0))
             return;
@@ -391,7 +399,7 @@ public class BoidsAgent : MonoBehaviour
             */
     }
 
-    private void SteerTowards(Vector3 point, float modifier = 1)
+    protected void SteerTowards(Vector3 point, float modifier = 1)
     {
         point = point - transform.position;
         point.Normalize();

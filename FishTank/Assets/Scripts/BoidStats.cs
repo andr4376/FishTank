@@ -32,6 +32,9 @@ public class BoidStats : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, avoidanceRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, friendDetectionRange);
     }
 
 }
