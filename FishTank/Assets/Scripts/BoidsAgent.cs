@@ -1,0 +1,403 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[RequireComponent(typeof(BoidStats))]
+public class BoidsAgent : MonoBehaviour
+{
+    BoidStats stats;
+
+#if DEBUG
+    private Vector3 flockCenterMassPosition = Vector3.zero;
+#endif
+
+    public float cohesionFactor = 1, alignmentFactor = 1, avoidanceFactor = 1;
+
+    private float obstacleTS;
+    private float recoverCD = 1f;
+
+    [Range(0, 1)]
+    public float obstacleIgnorance = 1;
+
+    static private Transform _boidAnchor;
+    static Transform BoidAnchor
+    {
+        get
+        {
+            if (_boidAnchor == null)
+            {
+                GameObject go = new GameObject("Boids");
+                _boidAnchor = go.transform;
+            }
+            return _boidAnchor;
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //For Hierarchy management
+        //All boids will appear under the a game object
+        transform.SetParent(BoidAnchor, true);
+
+        stats = GetComponent<BoidStats>();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void CalculateDirection(List<BoidsAgent> otherBoids)
+    {
+        List<BoidsAgent> boidsInRange = new List<BoidsAgent>();
+
+        foreach (BoidsAgent boid in otherBoids)
+        {
+            if (boid == this)
+                continue;
+            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
+                boidsInRange.Add(boid);
+        }
+
+
+
+
+        ///ADD WEIGHTS INSTEAD OF EITHER OR
+        bool headingForCollision = ObstacleDetection();
+
+
+        if (otherBoids.Count < 1)
+            return;
+
+        Cohesion(
+            boidsInRange,
+            headingForCollision);
+
+        Avoidance(boidsInRange);
+
+        if (!headingForCollision)
+            Alignment(boidsInRange);
+
+
+
+    }
+
+
+
+    private void Alignment(List<BoidsAgent> boidsInRange)
+    {
+        Vector3 averageRotation = Vector3.zero;
+
+        //add all the rotations together
+        foreach (BoidsAgent boid in boidsInRange)
+        {
+            averageRotation += boid.transform.rotation.eulerAngles;
+        }
+
+        if (averageRotation == Vector3.zero)
+            return;
+
+        //divide to get average
+        averageRotation = averageRotation / boidsInRange.Count;
+
+        //calculate speed
+        float speed = (stats.rotationSpeed * alignmentFactor) * Time.deltaTime;
+
+        //rotate towards the average rotation of the boids, lerping by speed
+        transform.rotation =
+            Quaternion.Lerp(transform.rotation, Quaternion.Euler(averageRotation),
+            speed);
+
+    }
+
+    private void Cohesion(List<BoidsAgent> boidsInRange,
+        bool headingForColision = false)
+    {
+
+        if (boidsInRange.Count < 1)
+            return;
+
+        Vector3 centerPoint = transform.position;
+
+        //add all the positions together
+        foreach (BoidsAgent boid in boidsInRange)
+        {
+            centerPoint += boid.transform.position;
+        }
+
+        if (centerPoint == Vector3.zero)
+            return;
+
+        //divide to get average
+        centerPoint = centerPoint / (boidsInRange.Count + 1);
+        /**/
+
+#if DEBUG
+        flockCenterMassPosition = centerPoint;
+        Debug.DrawLine(transform.position, centerPoint);
+#endif
+        float steerForce =
+            headingForColision ? obstacleIgnorance : 1;
+
+        SteerTowards(centerPoint, steerForce);
+    }
+
+
+    private void Avoidance(List<BoidsAgent> boidsInRange)
+    {
+        Vector3 othersCenterMass = Vector3.zero;
+        int count = 0;
+
+        foreach (BoidsAgent boid in boidsInRange)
+        {
+            float d = Vector3.Distance(transform.position,
+                boid.transform.position);
+
+            if ((d > 0) && (d < stats.avoidanceRange))
+            {
+                othersCenterMass += boid.transform.position;
+                count++;
+            }
+
+        }
+
+        if (count == 0)
+            return;
+
+        othersCenterMass /= count;
+
+        SteerInDirection((transform.position - othersCenterMass).normalized,avoidanceFactor);
+
+    }
+
+
+    private bool ObstacleDetection()
+    {/*
+        Ray[] rayArray = new Ray[]{
+        new Ray(transform.position, transform.right)
+        ,
+        new Ray(transform.position, (transform.forward+transform.right)*0.75f),
+        new Ray(transform.position, (((transform.forward*-1)+transform.right)*0.75f))
+        };
+
+        bool obstacleDetected = false;
+
+        RaycastHit hit;
+        foreach (Ray ray in rayArray)
+        {
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                
+
+                if (hit.distance <= stats.obstacleDetectionRange)
+                {
+                    float step = (stats.rotationSpeed) * Time.deltaTime;
+                    var targetRotation =
+                        Quaternion.LookRotation(
+                            (hit.point-transform.position)*-1,
+                        Vector3.up);
+                    // transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+
+
+
+                    //over time
+                    transform.rotation =
+                        Quaternion.Slerp(transform.rotation,
+                        targetRotation, stats.rotationSpeed * Time.deltaTime);
+
+
+
+
+                    obstacleTS = Time.time;
+#if DEBUG
+                    Debug.DrawLine(transform.position, (transform.position + transform.right * stats.obstacleDetectionRange));
+                    Debug.DrawLine(transform.position, (transform.position + transform.forward * stats.obstacleDetectionRange));
+                    Debug.DrawLine(transform.position, (transform.position + -transform.forward * stats.obstacleDetectionRange));
+#endif
+
+                    obstacleDetected = true;
+                }
+            }
+        }
+        */
+
+        bool obstacleDetected = false;
+        RaycastHit hit;
+
+        float angle = 0.5f;
+
+        Vector3 detectionStartPos = transform.position;
+
+        //Detecting straight ahead
+        if (Physics.Raycast(
+            detectionStartPos,
+            transform.right,
+            out hit, stats.obstacleDetectionRange * 0.75f))
+        {
+            Debug.DrawLine(transform.position,
+                (transform.position + transform.right *
+                stats.obstacleDetectionRange * angle));
+
+            //turn fast
+            stats.rotationSpeed = stats.initialRrotationSpeed * 3;
+            stats.speed = stats.initialSpeed * 2f;
+
+
+            SteerInDirection(transform.right * -1);
+
+
+        }
+        else
+        {
+            stats.rotationSpeed = stats.initialRrotationSpeed;
+            stats.speed = stats.initialSpeed;
+
+        }
+        //Detecting left
+
+        if (Physics.Raycast(
+            detectionStartPos,
+            (transform.forward + transform.right) * angle,
+            out hit, stats.obstacleDetectionRange))
+        {
+            Debug.DrawLine(transform.position,
+                (transform.position + ((transform.forward +
+                transform.right) * angle) *
+                stats.obstacleDetectionRange));
+
+            SteerInDirection(transform.right);
+
+            obstacleDetected = true;
+        }
+        else
+        {
+
+
+            //Detecting right
+            if (Physics.Raycast(
+               detectionStartPos,
+               ((transform.forward * -1) + transform.right) * angle,
+               out hit, stats.obstacleDetectionRange))
+            {
+                Debug.DrawLine(transform.position,
+                    (transform.position + (((transform.forward * -1)
+                    + transform.right) * angle) *
+                    stats.obstacleDetectionRange));
+
+                SteerInDirection(transform.right * -1);
+
+
+                obstacleDetected = true;
+
+            }
+        }
+
+        //Detecting up
+        if (Physics.Raycast(
+           detectionStartPos,
+           (transform.right + transform.up) * angle,
+           out hit, stats.obstacleDetectionRange))
+        {
+            Debug.DrawLine(transform.position,
+                (transform.position +
+                ((transform.right + transform.up) * angle) *
+                stats.obstacleDetectionRange));
+
+            transform.Rotate(
+               new Vector3(0, 0, -1)
+               * (stats.rotationSpeed
+               * stats.verticalRotationMultiplier) * Time.deltaTime);
+            obstacleDetected = true;
+
+        }
+        else
+        {
+
+
+            //Detecting down
+            if (Physics.Raycast(
+               detectionStartPos,
+               (transform.right + (transform.up * -1)) * angle,
+               out hit, stats.obstacleDetectionRange))
+            {
+                Debug.DrawLine(transform.position,
+                    (transform.position +
+                    ((transform.right + (transform.up * -1)) * angle) *
+                    stats.obstacleDetectionRange));
+
+
+                transform.Rotate(
+                    new Vector3(0, 0, 1)
+                    * (stats.rotationSpeed
+                    * stats.verticalRotationMultiplier) * Time.deltaTime);
+
+                obstacleDetected = true;
+
+            }
+        }
+
+        return obstacleDetected;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (stats == null)
+            return;
+
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(transform.position, (transform.position + transform.right * stats.obstacleDetectionRange));
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+#if DEBUG
+
+        if (stats == null)
+            return;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, stats.friendDetectionRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(flockCenterMassPosition, .3f);
+#endif
+    }
+
+    private void SteerInDirection(Vector3 point, float modifier = 1)
+    {
+        if (Mathf.Approximately(modifier, 0))
+            return;
+
+        point.Normalize();
+
+        transform.right = Vector3.Lerp(
+            transform.right, point, stats.rotationSpeed * modifier * Time.deltaTime);
+        /*
+        float step = ((stats.rotationSpeed) * Time.deltaTime)*modifier;
+        var targetRotation =
+            Quaternion.LookRotation(
+                point,
+            transform.up);
+
+        //over time
+        transform.rotation =
+            Quaternion.Slerp(transform.rotation,
+            targetRotation, stats.rotationSpeed * Time.deltaTime);
+            */
+    }
+
+    private void SteerTowards(Vector3 point, float modifier = 1)
+    {
+        point = point - transform.position;
+        point.Normalize();
+
+        SteerInDirection(point, modifier);
+    }
+
+}
+
