@@ -2624,16 +2624,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boidsToSpawn:
   - boid: {fileID: 2388544733630001141, guid: 7407f3c89bde3c14b9a17cf967afbb33, type: 3}
-    chanceOfSpawning: 100
-  - boid: {fileID: 3513033200459429521, guid: 70a25e9f6af367741a97492af1177d31, type: 3}
-    chanceOfSpawning: 0
+    spawnCount: 62
+  - boid: {fileID: 6105644130136390521, guid: e2f5cf1aec983a943a5420d2009f0c69, type: 3}
+    spawnCount: 8
   spawnPoints:
   - {fileID: 2141313542}
   - {fileID: 2117294040}
   - {fileID: 1153904297}
   - {fileID: 914519606}
-  spawnAmount: 50
-  spawnRadius: 9.4
+  spawnRadius: 14.4
   boidsCount: 0
 --- !u!4 &2060912479
 Transform:

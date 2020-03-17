@@ -20,7 +20,33 @@ public class BoidsPredator : BoidsAgent
     }
     public override void CalculateDirection(List<BoidsAgent> otherBoids)
     {
-        base.CalculateDirection(otherBoids);
+        List<BoidsAgent> boidsInRange = new List<BoidsAgent>();
+
+        foreach (BoidsAgent boid in otherBoids)
+        {
+            if (boid == this)
+                continue;
+            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
+                boidsInRange.Add(boid);
+        }
+               
+
+       
+        bool headingForCollision = ObstacleDetection();
+
+
+        if (otherBoids.Count < 1)
+            return;
+        /*
+        Cohesion(
+            boidsInRange,
+            headingForCollision);
+
+        Avoidance(boidsInRange);
+
+        if (!headingForCollision)
+            Alignment(boidsInRange);
+            */
     }
 
     protected override void Alignment(List<BoidsAgent> boidsInRange)

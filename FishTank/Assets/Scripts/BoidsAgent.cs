@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoidStats))]
 public class BoidsAgent : MonoBehaviour
 {
-    BoidStats stats;
+   protected BoidStats stats;
 
 #if DEBUG
     private Vector3 flockCenterMassPosition = Vector3.zero;
@@ -14,8 +14,6 @@ public class BoidsAgent : MonoBehaviour
 
     public float cohesionFactor = 1, alignmentFactor = 1, avoidanceFactor = 1;
 
-    private float obstacleTS;
-    private float recoverCD = 1f;
 
     [Range(0, 1)]
     public float obstacleIgnorance = 1;

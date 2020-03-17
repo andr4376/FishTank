@@ -5,11 +5,11 @@
 
 		[Header(Fish Motion Settings)]
 		[Space(10)]			
-		_TailSpeed("Tail Speed", Range(0, 100)) = 1
+		_TailSpeed("Tail Speed", Range(0, 300)) = 1
 		_TailFrequency("Tail Frequency", Range(0, 15)) = 1
 		_TailAmplitude("Tail Wiggle Range", Range(0,  3)) = 1
 		_HeadMovement("Head Movement", Range(0,  1)) = 0.05
-		_HeadStart("Head Start", Range(-0.5,  0.5)) = 0.05
+		_HeadStart("Head Start", Range(-10,  10)) = 0.05
 
 		[Header(COLOR)]
 		[Space(10)]

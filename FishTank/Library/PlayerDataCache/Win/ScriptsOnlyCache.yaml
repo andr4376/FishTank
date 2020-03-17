@@ -4,8 +4,11 @@ ScriptsOnlyBuild:
     - BoidStats
     - BoidsAgent
     - BoidsManager
+    - BoidsPredator
+    - CameraMovementScript
     - FishMovementScript
     - FogController
+    - MaterialRandomizer
     - VolumetricLightController
     - VolumetricLightScatteringCamera
     - VolumetricLightScatteringEffect
@@ -60,23 +63,29 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11892}
+      Script: {instanceID: 11370}
     - Class: 114
-      Script: {instanceID: 11918}
+      Script: {instanceID: 11662}
     - Class: 114
-      Script: {instanceID: 12152}
+      Script: {instanceID: 11902}
     - Class: 114
-      Script: {instanceID: 12200}
+      Script: {instanceID: 11928}
     - Class: 114
-      Script: {instanceID: 12438}
+      Script: {instanceID: 12062}
     - Class: 114
-      Script: {instanceID: 12538}
+      Script: {instanceID: 12124}
     - Class: 114
-      Script: {instanceID: 41596}
+      Script: {instanceID: 12144}
     - Class: 114
-      Script: {instanceID: 41598}
+      Script: {instanceID: 12168}
     - Class: 114
-      Script: {instanceID: 49146}
+      Script: {instanceID: 12216}
+    - Class: 114
+      Script: {instanceID: 12454}
+    - Class: 114
+      Script: {instanceID: 12554}
+    - Class: 114
+      Script: {instanceID: 12880}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -118,6 +127,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
+  - hash:
+      serializedVersion: 2
+      Hash: ff134d6d2f128a9e30650d9e4ae76a71
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: VolumetricLightScatteringEffect
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -216,6 +231,12 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
+      Hash: 6b36895826591f9aa8e198e237f3dedd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: VolumetricLightScatteringCamera
+  - hash:
+      serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -270,7 +291,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: d5a4e8756ce7d9b531da8050eb57d5ec
+      Hash: a46f0246a45f9a3ae0bfd737b8af1010
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BoidsManager
@@ -294,16 +315,34 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: 6428b2b928013987642990e4d3c6b015
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BoidsPredator
+  - hash:
+      serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Asset
   - hash:
       serializedVersion: 2
+      Hash: 3e4e4fbe42765fe496c9a3bee4b21e65
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MaterialRandomizer
+  - hash:
+      serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ScrollRect
+  - hash:
+      serializedVersion: 2
+      Hash: 3635d7b908aaef853582226f125f30d2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: VolumetricLightController
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -432,6 +471,12 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
+      Hash: db987f6e054f8282bac0cd63ece07ee1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraMovementScript
+  - hash:
+      serializedVersion: 2
       Hash: f336e086360abe49a3323e5f1583c35a
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -556,24 +601,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: ff134d6d2f128a9e30650d9e4ae76a71
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: VolumetricLightScatteringEffect
-  - hash:
-      serializedVersion: 2
-      Hash: 6b36895826591f9aa8e198e237f3dedd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: VolumetricLightScatteringCamera
-  - hash:
-      serializedVersion: 2
-      Hash: 3635d7b908aaef853582226f125f30d2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: VolumetricLightController
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

@@ -10,7 +10,7 @@ public class BoidsManager : MonoBehaviour
 
     [SerializeField]
     [Header("The individual boid prefab & chance for spawn")]
-    List<BoidAndSpawnChance> boidsToSpawn;
+    List<BoidType> boidsToSpawn;
 
     [Header("Position and Rotation for spawnpoints:")]
     [SerializeField]
@@ -18,9 +18,7 @@ public class BoidsManager : MonoBehaviour
 
     [Header("Set in inspector:")]
 
-    [SerializeField]
-    [Range(2,50)]
-    int spawnAmount;
+   
     [SerializeField]
     [Range(3, 30)]
     float spawnRadius;
@@ -54,46 +52,32 @@ public class BoidsManager : MonoBehaviour
 
     private void SpawnBoids()
     {
-        for (int i = 0; i < spawnAmount; i++)
+        Transform spawnPosition;
+
+        foreach (BoidType boiType in boidsToSpawn)
         {
-            GameObject boid = null;
-
-            //get random spawn point
-            Transform spawnPosition;            
-            spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-            int spawnNumber = Random.Range(0, 101);
-
-            //sort (lowest spawn chance first)
-            boidsToSpawn.Sort(BoidAndSpawnChance.SortByChance);
-
-            foreach (BoidAndSpawnChance b in boidsToSpawn)
+            for (int i = 0; i < boiType.spawnCount; i++)
             {
-                if (spawnNumber<=b.chanceOfSpawning)
-                {
-                    boid = b.boid;
-                    break;
-                }
+                GameObject boid;
+
+                spawnPosition = spawnPoints[
+                Random.Range(0, spawnPoints.Length)];
+
+                boid = GameObject.Instantiate(boiType.boid,
+                    spawnPosition.position, spawnPosition.rotation);
+
+                boid.transform.position += new Vector3(
+                    Random.Range(-spawnRadius, spawnRadius),
+                    Random.Range(-spawnRadius, spawnRadius),
+                    Random.Range(-spawnRadius, spawnRadius));
+
+                boid.name = "Boid#" + (i + 1);
+
+                BoidsAgent agent = boid.GetComponent<BoidsAgent>();
+
+                boids.Add(agent);
+
             }
-
-            if (boid == null) //select the boid with highest chance in case of error
-                boid = boidsToSpawn[boidsToSpawn.Count - 1].boid;
-
-
-
-
-            boid = GameObject.Instantiate(boid,spawnPosition.position,spawnPosition.rotation);
-            boid.transform.position += new Vector3(
-                Random.Range(-spawnRadius, spawnRadius),
-                Random.Range(-spawnRadius, spawnRadius),
-                Random.Range(-spawnRadius, spawnRadius));
-
-            boid.name = "Boid#" + (i + 1);
-
-            BoidsAgent agent = boid.GetComponent<BoidsAgent>();
-
-            boids.Add(agent);
-
 
         }
 
@@ -136,15 +120,11 @@ public class BoidsManager : MonoBehaviour
 }
 
 [System.Serializable]
-struct BoidAndSpawnChance
+struct BoidType
 {
     public GameObject boid;
 
     [Range(0,100)]
-    public float chanceOfSpawning;
+    public int spawnCount;
 
-    public static int SortByChance(BoidAndSpawnChance p1, BoidAndSpawnChance p2)
-    {
-        return p1.chanceOfSpawning.CompareTo(p2.chanceOfSpawning);
-    }
 }
