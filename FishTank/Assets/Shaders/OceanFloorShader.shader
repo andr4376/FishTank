@@ -4,8 +4,13 @@
 	{
 		[Header(TEXTURE)]
 		[Space(10)]
-        _MainTex("Main Texture",2D) = "black"{}
+        _MainTex("Main Texture",2D) = "white"{}
         _TextureTransparency("TextureTransparency",Range(0,1)) = 1
+		[Space(10)]
+		_Color("Color", Color) = (0,0,0,0)
+		_ColorIntensity("Color Intensity", Range(0,1)) = 0.5
+		[Space(10)]
+
         _NoiseTexture("NoiseTexture",2D) = "black"{}
         _ScrollSpeed("Noise Scroll",Vector) = (0,0,0,0)
         _NoiseTransparency("Noise Transparency",Range(0,1)) = 1
@@ -14,32 +19,23 @@
 		
 
 		[Space(15)]
-		[Header(COLOR)]
-		[Space(10)]
-	_AmbientColor("Ambient Color", Color) = (1,1,1,1)
-		[Space(15)]
-		[Header(LIGHT SETTINGS)]
-		[Space(10)]
-		[Header(Specular Lighting)]
-		[Space(10)]
+		[Header(Light Settings)]
+        [Space(10)]
+        [Header(Light colors)]
+        [Space(5)]
+        _AmbientColor("Ambient Color (Shadow color)",Color)=(1,1,1,1)
+        _SpecularLightColor("Specular Light Color", Color)= (1,1,1,1)
+        _RimColor("Rim Color",Color)=(0,0,0,0)
 
-	_SpecularPower("Specular Power", Range(0,100))=47
-	_SpecularStrenght("Specular strenght", Range(0,1))=0.5
-		[Space(15)]
-		[Header(Rim Lighting)]
-		[Space(10)]
+        [Header(Specular light settings)]
+        [Space(5)]
+        _Glosiness("Gloss",Float)=1
+        _SpecularBlur("Specular Blur", Float) = 0
 
-	_RimColor("Rom Color",Color) = (1,1,1,1)
-	_RimStrenght	("Rim Strenght", Range(0,1))=1
-	_RimThreshold		("Rim Threshold", Range(0,1))=1
-	_RimAmount		("Rim Amount", Range(0,1))=1
-
-		[Space(15)]
-		[Header(Shadow settings)]
-		[Space(10)]
-
-	_LightIntensity("Light Intensity",Range(-0.5,0.5)) = 0
-	_ShadowSoftness("Shadow Softness", Range(0,0.02)) =0.01
+        [Header(Rim light Settings)]
+        [Space(5)]
+        _RimThreshold("Rim Threshold",Range(0,1))=0.1
+        _RimAmount("Rim Amount",Range(0,1))=0.5
 
 
 	}
@@ -47,19 +43,24 @@
 		
 	{
 		Tags {	"RenderType" = "Opaque" 
-	"LightMode" = "ForwardBase"}
+				"LightMode" = "ForwardBase"
+				"PassFlags" = "OnlyDirectional"}
 
 		Pass
 		{
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+
+			//OBS: Include if using FishTankLighting.cginc!!
+            //Compiles multiple versions based on light settings
+            //Needed in order to  apply shadow from other shadow casters 
 			#pragma multi_compile_fwdbase
 
 			#include "UnityCG.cginc"
 			#include "Assets/Shaders/Fog.cginc"
-			#include "UnityLightingCommon.cginc"
-			#include "AutoLight.cginc"
+			#include "Assets/Shaders/FishTankLighting.cginc"
+			
 			struct appdata
 			{
 				float4 vertex : POSITION;
@@ -71,12 +72,14 @@
 			{
 				float4 pos : SV_POSITION;
 				float3 worldPos : TEXCOORD0;
-				float3 viewDirection : TEXCOORD1;
-				float2 uv : TEXCOORD2;
-				float3 normal : NORMAL;
-				float2 noiseUV : TEXCOORD3;
+				float2 uv : TEXCOORD1;
 
+				//Light
+				float3 worldNormal : NORMAL;
+				float3 viewDir : TEXCOORD2;	
 				SHADOW_COORDS(4)
+
+				float2 noiseUV : TEXCOORD3;
 			};
 
 
@@ -84,6 +87,10 @@
             sampler2D _MainTex;
             float4 _MainTex_ST;
 			float _TextureTransparency;
+
+			float4 _Color;
+			float _ColorIntensity;
+
 			sampler2D _NoiseTexture;
 			float4 _NoiseTexture_ST;
 			float _NoiseTransparency;
@@ -92,18 +99,19 @@
 
 
 
-			float4 _AmbientColor;
-			float _SpecularPower;
-			float _SpecularStrenght;//glow spot intensity
+			//Shadow / light colors
+            float4 _AmbientColor;
+            float4 _SpecularLightColor;
+            float4 _RimColor;
 
-			float _ShadowSoftness;
+            //How shiny should the object appear
+            float _Glosiness;
+            //Defines the sharpness of the specular glow 
+            float _SpecularBlur;
 
-			//Rim lighting
-			float _RimStrenght;
-			float _RimAmount;
-			float4 _RimColor;
-			float _RimThreshold;
-			float _LightIntensity;
+            //Rim light settings
+            float _RimThreshold;
+            float _RimAmount;
 
 			v2f vert(appdata v)
 			{
@@ -113,18 +121,18 @@
 				//WORLD SPACE
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 				
-				o.normal = UnityObjectToWorldNormal(v.normal);
+				//Get normal in world space
+				o.worldNormal = UnityObjectToWorldNormal(v.normal);
 
-				o.viewDirection = WorldSpaceViewDir(v.vertex);
+				//View Direction in world space
+				o.viewDir = WorldSpaceViewDir(v.vertex);
 
 				//main texture coordinate
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
-                o.noiseUV = TRANSFORM_TEX(v.uv, _NoiseTexture);
-
-
 				//shadow
 				TRANSFER_SHADOW(o)
+                o.noiseUV = TRANSFORM_TEX(v.uv, _NoiseTexture);
 
 				return o;
 			}
@@ -132,78 +140,54 @@
 			fixed4 frag(v2f i) : SV_Target
 			{
 
-				//lighting
-				float3 normal = normalize(i.normal);
-				float3 viewDirection = normalize(i.viewDirection);
+	float4 color;
 
-				//diffuse dot product
-				//based on light direction and fragment normal
-				float nDotL = dot(_WorldSpaceLightPos0, normal);
+	/*
+	Use FishTankLighting.cginc file to calculate 
+	Blinn-phong lighting + Rim lighting	
+	*/
+	float4 light =
+               GetLight(      
+                    i.worldNormal,
+                    i.viewDir,
+                    SHADOW_ATTENUATION(i),
+					TOONY_SHADOW_EDGE, //defines in my light include
+                    _Glosiness,
+                    _SpecularLightColor,
+                    _SpecularBlur,
+                    _RimThreshold,
+                    _RimAmount,
+                    _RimColor);		
+					
 
-				//get the amount of light the fragment should have
-				//from 0 - 1 (darkness and brightness)
- 				float diffuse = max(0,nDotL) * SHADOW_ATTENUATION(i);
-
-				//Make sure shadow is not darker than what the material allows
-				diffuse = max(_ShadowSoftness,diffuse);
-
-				//toon (Very sharp shadow edge)
-				diffuse = smoothstep(0,0.02,diffuse); //adjust second val
 
 
-				//Specular lighting
-				float3 r = -reflect(_WorldSpaceLightPos0, normal);
-				float rDotV = max(0,dot(r, viewDirection));
-				float specular = pow(rDotV, _SpecularPower);
+			//Noise 
+			//Sample noise
+            float noise = tex2D(_NoiseTexture, i.noiseUV +
+           		 _ScrollSpeed.xy * _Time.yy).r;		
 
-				//toon
-				specular = smoothstep(0,0.2,specular)*_SpecularStrenght; 
-				
-				//Rim
-				float rimDot = 1-dot(viewDirection,normal);
-				float rimIntensity = rimDot * pow(nDotL,_RimThreshold );
-				//sharp edges
-						rimIntensity = smoothstep(_RimAmount-0.01,
-						 _RimAmount+0.01, rimIntensity) * _RimStrenght;
 
-				float4 rim = rimIntensity*_RimColor;
-
-				
-	
-				float4 texColor = tex2D(_MainTex, i.uv) * _TextureTransparency;
-
-				//Primary color is ambient color mixed with texture 
-				float4 color =	(_AmbientColor + texColor); 
-
-				
-
-				//Rim, Specular and light color 
-				float4 lightFactor = 
-				((_LightColor0 * _LightIntensity) +
-				  specular + rim);
-
-				//apply ligthing
-				 color *=
-				 (diffuse+ lightFactor); //+ for high exposure * for darker
-
-				//Noise 
-				 //Sample noise
-                float noise = tex2D(_NoiseTexture, i.noiseUV +
-                 _ScrollSpeed.xy * _Time.yy).r;		
-				 
-				 noise*= color.rgb>_NoiseShadowThreshold || _NoiseShadowThreshold==0; 
-
-				color+=  (noise*_NoiseTransparency);
 				 
 
+			float4 texColor = tex2D(_MainTex, i.uv) * _TextureTransparency;
+
+
+			color = (light + _AmbientColor) * texColor +
+	 				(_Color * _ColorIntensity);
+
+			noise*= color.rgb>_NoiseShadowThreshold
+			 		|| _NoiseShadowThreshold==0; 
+
+			color+=  (noise*_NoiseTransparency);
 				color= ApplyFog(color, i.worldPos);
 
 				return color;
 
 			}
 			ENDCG
-		}
 	}
+}
 		//allow shadow castiong from standard shaders
 				Fallback "Diffuse"
 }

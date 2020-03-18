@@ -2,6 +2,8 @@
 	Properties{
 		
 		_MainTex("Fish texture", 2D) = "white" {}
+		_Color("Fish Color", Color) = (0,0,0,0)
+		_ColorIntensity("Color Intensity", Range(0,1)) = 0.5
 
 		[Header(Fish Motion Settings)]
 		[Space(10)]			
@@ -11,36 +13,30 @@
 		_HeadMovement("Head Movement", Range(0,  1)) = 0.05
 		_HeadStart("Head Start", Range(-10,  10)) = 0.05
 
-		[Header(COLOR)]
-		[Space(10)]
-	_AmbientColor("Ambient Color", Color) = (1,1,1,1)
-		[Space(15)]
-		[Header(LIGHT SETTINGS)]
-		[Space(10)]
-		[Header(Specular Lighting)]
-		[Space(10)]
+	[Header(Light Settings)]
+        [Space(10)]
+        [Header(Light colors)]
+        [Space(5)]
+        _AmbientColor("Ambient Color (Shadow color)",Color)=(1,1,1,1)
+        _SpecularLightColor("Specular Light Color", Color)= (1,1,1,1)
+        _RimColor("Rim Color",Color)=(0,0,0,0)
 
-	_SpecularPower("Specular Power", Range(0,100))=47
-	_SpecularStrenght("Specular strenght", Range(0,1))=0.5
-		[Space(15)]
-		[Header(Rim Lighting)]
-		[Space(10)]
+        [Header(Specular light settings)]
+        [Space(5)]
+        _Glosiness("Gloss",Float)=1
+        _SpecularBlur("Specular Blur", Float) = 0
 
-	_RimColor("Rom Color",Color) = (1,1,1,1)
-	_RimStrenght	("Rim Strenght", Range(0,1))=1
-	_RimThreshold		("Rim Threshold", Range(0,1))=1
-	_RimAmount		("Rim Amount", Range(0,1))=1
+        [Header(Rim light Settings)]
+        [Space(5)]
+        _RimThreshold("Rim Threshold",Range(0,1))=0.1
+        _RimAmount("Rim Amount",Range(0,1))=0.5
+		
 
-		[Space(15)]
-		[Header(Shadow settings)]
-		[Space(10)]
-
-	_LightIntensity("Light Intensity",Range(-0.5,0.5)) = 0
-	_ShadowSoftness("Shadow Softness", Range(0,0.02)) =0.01
 	}
 SubShader{
 		Tags{ "RenderType" = "Opaque" 
-		"LightMode" = "ForwardBase"}
+		"LightMode" = "ForwardBase"
+		"PassFlags" = "OnlyDirectional"}
 		
 		Cull Off
 
@@ -52,9 +48,8 @@ SubShader{
 	#pragma multi_compile_fwdbase
 
 	#include "UnityCG.cginc"
-	#include "Assets/Shaders/Fog.cginc"
-	#include "UnityLightingCommon.cginc"	
-	#include "AutoLight.cginc"
+	#include "Assets/Shaders/Fog.cginc"	
+    #include "Assets/TMP_TESTING/FishTankLighting.cginc"
 
 	struct appdata
 	{
@@ -70,9 +65,9 @@ SubShader{
 		//fog	
 		float3 worldPos : TEXCOORD1;
 
-		//shadow
-		float3 viewDirection : TEXCOORD2;
-		float3 normal : NORMAL;
+		//Light
+		float3 worldNormal : NORMAL;
+		float3 viewDir : TEXCOORD2;	
 		SHADOW_COORDS(3)
 
 	};
@@ -80,6 +75,8 @@ SubShader{
 	
 	sampler2D _MainTex;
 	float4 _MainTex_ST;
+	float4 _Color;
+	float _ColorIntensity;
 
 	float _TailSpeed;
 	float _TailFrequency;
@@ -87,19 +84,19 @@ SubShader{
 	float _HeadStart;
 	float _HeadMovement;
 
-	//Color Light and shadow
-			float4 _AmbientColor;	
-			float _SpecularPower;
-			float _SpecularStrenght;//glow spot intensity
+			//Shadow / light colors
+            float4 _AmbientColor;
+            float4 _SpecularLightColor;
+            float4 _RimColor;
 
-			float _ShadowSoftness;
+            //How shiny should the object appear
+            float _Glosiness;
+            //Defines the sharpness of the specular glow 
+            float _SpecularBlur;
 
-			//Rim lighting
-			float _RimStrenght;
-			float _RimAmount;
-			float4 _RimColor;
-			float _RimThreshold;
-			float _LightIntensity;
+            //Rim light settings
+            float _RimThreshold;
+            float _RimAmount;
 
 	//Manipulate the positions of the input verticies to 
 	//fit the motion of a fish
@@ -140,10 +137,10 @@ SubShader{
 		o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 
 		//Get normal
-		o.normal = UnityObjectToWorldNormal(v.normal);
+		o.worldNormal = UnityObjectToWorldNormal(v.normal);
 
 		//View Direction
-		o.viewDirection = WorldSpaceViewDir(v.vertex);
+		o.viewDir = WorldSpaceViewDir(v.vertex);
 
 		TRANSFER_SHADOW(o)
 		
@@ -154,72 +151,45 @@ SubShader{
 	//Foreach pixel
 	fixed4 frag(v2f i) : SV_Target
 	{
-		//lighting
-				float3 normal = normalize(i.normal);
-				float3 viewDirection = normalize(i.viewDirection);
-
-				//diffuse dot product
-				//based on light direction and fragment normal
-				float nDotL = dot(_WorldSpaceLightPos0, normal);
-
-				//get the amount of light the fragment should have
-				//from 0 - 1 (darkness and brightness)
- 				float diffuse = max(0,nDotL) * SHADOW_ATTENUATION(i);
-
-				//Make sure shadow is not darker than what the material allows
-				diffuse = max(_ShadowSoftness,diffuse);
-
-				//toon (Very sharp shadow edge)
-				diffuse = smoothstep(0,0.02,diffuse); //adjust second val
-
-
-				//Specular lighting
-				float3 r = -reflect(_WorldSpaceLightPos0, normal);
-				float rDotV = max(0,dot(r, viewDirection));
-				float specular = pow(rDotV, _SpecularPower);
-
-				//toon
-				specular = smoothstep(0,0.2,specular)*_SpecularStrenght; 
-				
-				//Rim
-				float rimDot = 1-dot(viewDirection,normal);
-				float rimIntensity = rimDot * pow(nDotL,_RimThreshold );
-				//sharp edges
-						rimIntensity = smoothstep(_RimAmount-0.01,
-						 _RimAmount+0.01, rimIntensity) * _RimStrenght;
-
-				float4 rim = rimIntensity*_RimColor;
-
-				
 	
-				float4 texColor = tex2D(_MainTex, i.uv) ;
+	float4 color;
 
-				//Primary color is ambient color mixed with texture 
-				float4 color =	(_AmbientColor * texColor); 
+	/*
+	Use FishTankLighting.cginc file to calculate 
+	Blinn-phong lighting + Rim lighting	
+	*/
+	float4 light =
+        GetLight(      
+        i.worldNormal, 			//Normal in world space
+        i.viewDir,				//World space view direction
+        SHADOW_ATTENUATION(i),	//Macro that tells if the fragmet is in other's shadows
+		TOONY_SHADOW_EDGE, 		//defines in my light include
+        _Glosiness,				//Gloss / Shine / Highlight
+        _SpecularLightColor,	//Specular light color
+        _SpecularBlur,			//Specular Blur
+        _RimThreshold,			//Rim Threshold
+        _RimAmount,				//Rim Amount
+        _RimColor);				//Rim Color
+					
 
-				//Rim, Specular and light color 
-				float4 lightFactor = 
-				((_LightColor0 * _LightIntensity) +
-				  specular + rim);
+	float4 texColor = tex2D(_MainTex, i.uv);
 
-				//apply ligthing
-				 color *=
-				 (diffuse+ lightFactor); //+ for high exposure * for darker
+	color = (light + _AmbientColor) * texColor +
+	 		(_Color * _ColorIntensity);
 
-				 color= ApplyFog(color, i.worldPos);
+	color= ApplyFog(color, i.worldPos);
 
-				return color;
+	return color;
+
 	}
-
 		ENDCG
-
-	}
-
+}
 
 	//SHADOW PASS
 	//In order to draw shadows, we do all the calculations one more time				
 	//But instead of drawing the fish, we use SHADOW_CASTER_FRAGMENT
 Pass
+
 		{
 		Tags {	"LightMode" = "ShadowCaster" }
 
@@ -278,12 +248,12 @@ Pass
 			 //Movement Calc End
 			* 
 			(v.vertex.x < _HeadStart);//1 if true 0 if false
-		//
+	
 		
 		o.pos = UnityObjectToClipPos(v.vertex);
 		return o;
 		}
-		///Tegner alle pixels for hver vertices
+		
 		fixed4 frag(v2f i) : SV_Target
 		{			
 				SHADOW_CASTER_FRAGMENT(1)
@@ -293,4 +263,6 @@ Pass
 	}
 	}
 		//	FallBack "Diffuse"	//allows casting of shadows
+
+
 }

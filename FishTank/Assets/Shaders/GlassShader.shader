@@ -17,7 +17,6 @@
         {
 
             Blend SrcAlpha OneMinusSrcAlpha //Traditional Transparency
-			ZWrite Off //Don't write to depth buffer
             Cull Off
             CGPROGRAM
             #pragma vertex vert

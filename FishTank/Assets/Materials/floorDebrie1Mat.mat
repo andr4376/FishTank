@@ -28,6 +28,8 @@ Material:
         m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _ColorIntensity: 0.5
+    - _Glosiness: 1
     - _LightIntensity: 0
     - _NoiseShadowThreshold: 0.608
     - _NoiseTransparency: 0.154
@@ -35,10 +37,13 @@ Material:
     - _RimStrenght: 1
     - _RimThreshold: 1
     - _ShadowSoftness: 0.01
+    - _SpecularBlur: 0
     - _SpecularPower: 47
     - _SpecularStrenght: 0.5
     - _TextureTransparency: 1
     m_Colors:
     - _AmbientColor: {r: 0, g: 0.6886792, b: 0.033164546, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ScrollSpeed: {r: 0, g: 0.1, b: 0, a: 0}
+    - _SpecularLightColor: {r: 1, g: 1, b: 1, a: 1}
