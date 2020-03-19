@@ -76,7 +76,9 @@ public class CameraMovementScript : MonoBehaviour
                 }
                 else
                 {
-                    return;
+                    pointIndex = 0;
+                    previousPoint = pointsToMoveBetween[pointsToMoveBetween.Length-1];
+                    nextPoint = pointsToMoveBetween[pointIndex];
                 }
             }
             if (nextPoint != null)
@@ -98,7 +100,10 @@ public class CameraMovementScript : MonoBehaviour
                 }
                 else
                 {
-                    return;
+                    pointIndex= pointsToMoveBetween.Length-1;
+                    nextPoint = pointsToMoveBetween[0];
+                    previousPoint = pointsToMoveBetween[pointIndex];
+                    
                 }
             }
             if (nextPoint != null)

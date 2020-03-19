@@ -37,6 +37,7 @@
 			"LightMode" = "ForwardBase"
 			"PassFlags" = "OnlyDirectional"}
 
+		Cull Off
 		Pass
 		{
 			CGPROGRAM
@@ -64,7 +65,6 @@
 				//Light
 				float3 worldNormal : NORMAL;
 				float3 viewDir : TEXCOORD2;	
-
 				SHADOW_COORDS(3)
 			};
 
@@ -139,8 +139,9 @@
 
 	float4 texColor = tex2D(_MainTex, i.uv);
 
-	color = (light + _AmbientColor) * (_Color 
-	 		 * _ColorIntensity);
+	color = (light + _AmbientColor)
+	 * (texColor*_TextureTransparency) 
+	 *(_Color * _ColorIntensity);
 
 			 /*
 			 color = (light + _AmbientColor) * texColor +

@@ -65,8 +65,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeadMovement: 0.561
-    - _HeadStart: 9.3
+    - _HeadMovement: 0
+    - _HeadStart: 10
     - _LightIntensity: 0
     - _Metallic: 0
     - _Mode: 0
@@ -82,8 +82,8 @@ Material:
     - _SpecularPower: 47
     - _SpecularStrenght: 0.5
     - _SrcBlend: 1
-    - _TailAmplitude: 0.07
-    - _TailFrequency: 0.91
+    - _TailAmplitude: 0.22
+    - _TailFrequency: 0.63
     - _TailSpeed: 57
     - _UVSec: 0
     - _ZWrite: 1

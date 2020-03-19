@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6105644130136390521}
-  m_Mesh: {fileID: 4711208715938537054, guid: 589624fd27685eb43814adf1ae93a319, type: 3}
+  m_Mesh: {fileID: 4711208715938537054, guid: e265e0e5ec78c0a488d512274cab30a9, type: 3}
 --- !u!23 &6105644130136390523
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   rotationSpeed: 1
-  obstacleDetectionRange: 10
+  obstacleDetectionRange: 15
   friendDetectionRange: 15
   avoidanceRange: 3.1
   initialSpeed: 0

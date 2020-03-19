@@ -49,7 +49,7 @@ SubShader{
 
 	#include "UnityCG.cginc"
 	#include "Assets/Shaders/Fog.cginc"	
-    #include "Assets/TMP_TESTING/FishTankLighting.cginc"
+    #include "Assets/Shaders/FishTankLighting.cginc"
 
 	struct appdata
 	{

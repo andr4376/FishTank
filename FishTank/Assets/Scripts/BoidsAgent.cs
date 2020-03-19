@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define DRAW
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -142,7 +143,7 @@ public class BoidsAgent : MonoBehaviour
         centerPoint = centerPoint / (boidsInRange.Count + 1);
         /**/
 
-#if DEBUG
+#if DRAW
         flockCenterMassPosition = centerPoint;
         Debug.DrawLine(transform.position, centerPoint);
 #endif
@@ -245,9 +246,13 @@ public class BoidsAgent : MonoBehaviour
             transform.right,
             out hit, stats.obstacleDetectionRange * 0.75f))
         {
+
+#if DRAW
+
             Debug.DrawLine(transform.position,
                 (transform.position + transform.right *
                 stats.obstacleDetectionRange * angle));
+#endif
 
             //turn fast
             stats.rotationSpeed = stats.initialRrotationSpeed * 3;
@@ -271,10 +276,14 @@ public class BoidsAgent : MonoBehaviour
             (transform.forward + transform.right) * angle,
             out hit, stats.obstacleDetectionRange))
         {
+
+#if DRAW
+
             Debug.DrawLine(transform.position,
                 (transform.position + ((transform.forward +
                 transform.right) * angle) *
                 stats.obstacleDetectionRange));
+#endif
 
             SteerInDirection(transform.right);
 
@@ -290,10 +299,14 @@ public class BoidsAgent : MonoBehaviour
                ((transform.forward * -1) + transform.right) * angle,
                out hit, stats.obstacleDetectionRange))
             {
+
+#if DRAW
+
                 Debug.DrawLine(transform.position,
                     (transform.position + (((transform.forward * -1)
                     + transform.right) * angle) *
                     stats.obstacleDetectionRange));
+#endif
 
                 SteerInDirection(transform.right * -1);
 
@@ -309,10 +322,14 @@ public class BoidsAgent : MonoBehaviour
            (transform.right + transform.up) * angle,
            out hit, stats.obstacleDetectionRange))
         {
+
+#if DRAW
+
             Debug.DrawLine(transform.position,
                 (transform.position +
                 ((transform.right + transform.up) * angle) *
                 stats.obstacleDetectionRange));
+#endif
 
             transform.Rotate(
                new Vector3(0, 0, -1)
@@ -331,10 +348,14 @@ public class BoidsAgent : MonoBehaviour
                (transform.right + (transform.up * -1)) * angle,
                out hit, stats.obstacleDetectionRange))
             {
+
+#if DRAW
+
                 Debug.DrawLine(transform.position,
                     (transform.position +
                     ((transform.right + (transform.up * -1)) * angle) *
                     stats.obstacleDetectionRange));
+#endif
 
 
                 transform.Rotate(
@@ -362,7 +383,7 @@ public class BoidsAgent : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-#if DEBUG
+#if DRAW
 
         if (stats == null)
             return;
