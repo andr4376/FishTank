@@ -155,6 +155,8 @@ float4 GetLight(
               rimAmount,
               rimColor);
 
+              
+
         return blinnPhong + rim;
 
 }

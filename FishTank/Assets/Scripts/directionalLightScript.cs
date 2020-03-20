@@ -21,7 +21,7 @@ public class directionalLightScript : MonoBehaviour
             - rotateFactor, startRotation.z);
 
         transform.position = new Vector3(startPosition.x - rotateFactor,
-            startPosition.y - rotateFactor, startPosition.y);
+            startPosition.y - rotateFactor, startPosition.z);
     }
     // Start is called before the first frame update
     void Start()

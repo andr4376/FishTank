@@ -45,7 +45,7 @@ public class BoidsManager : MonoBehaviour
     {
         boids = new List<BoidsAgent>();
 
-
+        
 
         SpawnBoids();
     }

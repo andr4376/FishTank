@@ -41,7 +41,7 @@ public class FogController : MonoBehaviour
     }
     private void Update()
     {
-#if DEBUG
+#if UNITY_EDITOR
         UpdateShader();
 #endif
     }

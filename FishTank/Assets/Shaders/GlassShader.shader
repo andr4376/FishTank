@@ -25,6 +25,12 @@
         _RimThreshold("Rim Threshold",Range(0,1))=0.1
         _RimAmount("Rim Amount",Range(0,1))=0.5
 
+        ////////////Ocean Floor
+		[Space(15)]
+		[Header(Ocean Floot Settings)]
+        [Space(10)]
+		_OceanFloorTransparency("Ocean floor light transparency", Range(0,1)) = 1
+
     }
     SubShader
     {
@@ -49,6 +55,7 @@
             #include "UnityCG.cginc"
 			#include "Assets/Shaders/Fog.cginc"
             #include "Assets/Shaders/FishTankLighting.cginc"
+			#include "Assets/Shaders/OceanFloorLight.cginc"
 
 
             struct appdata
@@ -90,6 +97,9 @@
             float _RimThreshold;
             float _RimAmount;
 
+            //Ocean floor
+            float _OceanFloorTransparency;
+
             v2f vert (appdata v)
             {
                 v2f o;
@@ -129,6 +139,13 @@
                     _RimColor);	
 
                 col*= light +_AmbientColor;
+
+            // apply oceanLight (from OceanFloorLight.cginc)
+	        col += GetOceanLight
+		            (i.worldNormal,
+		            i.worldPos,
+		            SHADOW_ATTENUATION(i),
+		            _OceanFloorTransparency);
                 
                 return  ApplyFog(_GlassColor+col, i.worldPos);
             }
