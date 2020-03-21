@@ -84,7 +84,7 @@ Material:
     - _SrcBlend: 1
     - _TailAmplitude: 0.3
     - _TailFrequency: 3.63
-    - _TailSpeed: 62.4
+    - _TailSpeed: 98
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

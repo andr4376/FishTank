@@ -1,8 +1,13 @@
 uniform sampler2D _OceanFloorTexture;
 uniform float3 _TextureScroll;
+uniform float4 _LightColor;
 
 
 #define TEX_SCALE 0.05
+
+//Unity functionality that assists with shadows and lighting
+#include "Lighting.cginc"
+#include "AutoLight.cginc"
 
 //Half Lambert / "Diffuse Wrapping":
 
@@ -44,7 +49,8 @@ float4 GetOceanLight(fixed worldNormal, float3 worldPos, float shadow, float tra
     float4 finalColor = 
     Half_Lambert *
      shadow * //Whether or not the fragment is in the shadow (0=true)
-      _LightColor0; //Color of the main directional light
+      _LightColor; //i dont use the directional light color, becuase it rarely complements the visuals
+      //use white?
 
     return finalColor;
 }

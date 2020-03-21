@@ -61,14 +61,14 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Glosiness: 1
+    - _Glosiness: 8.22
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OceanFloorTransparency: 0.41
+    - _OceanFloorTransparency: 0.326
     - _Parallax: 0.02
     - _RimAmount: 0.5
     - _RimThreshold: 0.1

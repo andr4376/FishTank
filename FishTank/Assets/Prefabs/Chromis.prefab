@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61f96687f8d1e514d8585440a1b4da09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cohesionFactor: 1
-  alignmentFactor: 1
-  avoidanceFactor: 10
+  cohesionFactor: 0.4
+  alignmentFactor: 0.8
+  avoidanceFactor: 0.8
   obstacleIgnorance: 0
 --- !u!114 &8358647310416152046
 MonoBehaviour:
@@ -127,19 +127,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8759f9e9e6c711a45b5129c93148398e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleRange: 0.8
   speed: 8
-  rotationSpeed: 1
+  rotationSpeed: 2
   obstacleDetectionRange: 20
-  friendDetectionRange: 20
-  avoidanceRange: 2
+  friendDetectionRange: 15
+  avoidanceRange: 1.5
   initialSpeed: 0
   initialRrotationSpeed: 0
   initialObstacleDetectionRange: 1
   initialGriendDetectionRange: 1
-  maxSpeed: 2
-  minSpeed: 5
-  maxSteerForce: 3
-  verticalRotationMultiplier: 40
+  maxSpeed: 10
+  minSpeed: 6
+  verticalRotationMultiplier: 30
 --- !u!135 &5511902232463923084
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8759f9e9e6c711a45b5129c93148398e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleRange: 0.5
   speed: 3
   rotationSpeed: 1
   obstacleDetectionRange: 15
@@ -119,9 +120,8 @@ MonoBehaviour:
   initialRrotationSpeed: 0
   initialObstacleDetectionRange: 1
   initialGriendDetectionRange: 1
-  maxSpeed: 2
-  minSpeed: 5
-  maxSteerForce: 3
+  maxSpeed: 3
+  minSpeed: 1
   verticalRotationMultiplier: 20
 --- !u!135 &4170473835888296704
 SphereCollider:

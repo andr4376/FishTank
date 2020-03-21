@@ -1,4 +1,4 @@
-﻿//#define DRAW
+﻿#define DRAW
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,18 +77,20 @@ public class BoidsAgent : MonoBehaviour
         bool headingForCollision = ObstacleDetection();
 
 
-        if (otherBoids.Count < 1)
+        if (otherBoids.Count < 1 || headingForCollision)
             return;
+
+
 
         Cohesion(
             boidsInRange,
             headingForCollision);
 
+
+        Alignment(boidsInRange);
+
         Avoidance(boidsInRange);
-
-        if (!headingForCollision)
-            Alignment(boidsInRange);
-
+        
 
 
     }
@@ -116,7 +118,8 @@ public class BoidsAgent : MonoBehaviour
 
         //rotate towards the average rotation of the boids, lerping by speed
         transform.rotation =
-            Quaternion.Lerp(transform.rotation, Quaternion.Euler(averageRotation),
+            Quaternion.Lerp(transform.rotation,
+            Quaternion.Euler(averageRotation),
             speed);
 
     }
@@ -150,11 +153,13 @@ public class BoidsAgent : MonoBehaviour
         float steerForce =
             headingForColision ? obstacleIgnorance : 1;
 
-        SteerTowards(centerPoint, steerForce);
+        //SteerTowards(centerPoint, steerForce);
+        MoveTowards(centerPoint,cohesionFactor);
+
     }
 
 
-    protected virtual void Avoidance(List<BoidsAgent> boidsInRange)
+    protected virtual bool Avoidance(List<BoidsAgent> boidsInRange)
     {
         Vector3 othersCenterMass = Vector3.zero;
         int count = 0;
@@ -173,12 +178,16 @@ public class BoidsAgent : MonoBehaviour
         }
 
         if (count == 0)
-            return;
+            return false;
 
         othersCenterMass /= count;
 
-        SteerInDirection((transform.position - othersCenterMass).normalized,avoidanceFactor);
+        // SteerInDirection((transform.position - othersCenterMass).normalized,avoidanceFactor);
+        MoveTowards(
+            transform.position+((transform.position-othersCenterMass).normalized *
+            Vector3.Distance(transform.position,othersCenterMass)), avoidanceFactor);
 
+        return true;
     }
 
 
@@ -395,6 +404,22 @@ public class BoidsAgent : MonoBehaviour
 #endif
     }
 
+
+    //TEST
+    protected void MoveTowards(Vector3 position, float modifier)
+    {
+        Vector3 direction = position - transform.position;
+
+        if (direction != Vector3.zero)
+        {
+            transform.rotation =
+                Quaternion.Slerp(transform.rotation,
+                Quaternion.LookRotation(direction) *
+                Quaternion.Euler(new Vector3(0,-90,0)),
+                stats.rotationSpeed* modifier * Time.deltaTime);
+        }
+    }
+
     protected void SteerInDirection(Vector3 point, float modifier = 1)
     {
         if (Mathf.Approximately(modifier, 0))
@@ -404,6 +429,10 @@ public class BoidsAgent : MonoBehaviour
 
         transform.right = Vector3.Lerp(
             transform.right, point, stats.rotationSpeed * modifier * Time.deltaTime);
+       
+        
+        
+        
         /*
         float step = ((stats.rotationSpeed) * Time.deltaTime)*modifier;
         var targetRotation =
