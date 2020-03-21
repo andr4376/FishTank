@@ -39,16 +39,20 @@ public class BoidsManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        boids = new List<BoidsAgent>();
+
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        boids = new List<BoidsAgent>();
-
-        
 
         SpawnBoids();
+
     }
+
+
 
     private void SpawnBoids()
     {
@@ -56,6 +60,7 @@ public class BoidsManager : MonoBehaviour
 
         foreach (BoidType boiType in boidsToSpawn)
         {
+
             for (int i = 0; i < boiType.spawnCount; i++)
             {
                 GameObject boid;
@@ -73,9 +78,6 @@ public class BoidsManager : MonoBehaviour
 
                 boid.name = "Boid#" + (i + 1);
 
-                BoidsAgent agent = boid.GetComponent<BoidsAgent>();
-
-                boids.Add(agent);
 
             }
 
@@ -103,6 +105,8 @@ public class BoidsManager : MonoBehaviour
     public static void AddBoid(BoidsAgent b)
     {
         Instance.boids.Add(b);
+        Instance.boidsCount = Instance.boids.Count;
+
     }
 
     public static Transform GetRandomSpawnPoint()
@@ -117,6 +121,8 @@ public class BoidsManager : MonoBehaviour
 
         return spawnPoint;
     }
+
+    
 }
 
 [System.Serializable]

@@ -38,6 +38,7 @@ public class BoidStats : MonoBehaviour
         speed = Random.Range(minSpeed, maxSpeed)* (1 + scale);;
         initialSpeed = speed;
         avoidanceRange *= (1 + scale);
+        initialObstacleDetectionRange *= (1 + scale);
 
 
         initialRrotationSpeed = rotationSpeed; 

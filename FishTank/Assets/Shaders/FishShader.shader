@@ -30,6 +30,13 @@
         [Space(5)]
         _RimThreshold("Rim Threshold",Range(0,1))=0.1
         _RimAmount("Rim Amount",Range(0,1))=0.5
+
+
+		////////////Ocean Floor
+		[Space(15)]
+		[Header(Ocean Floot Settings)]
+        [Space(10)]
+		_OceanFloorTransparency("Ocean floor light transparency", Range(0,1)) = 1
 		
 
 	}
@@ -50,6 +57,7 @@ SubShader{
 	#include "UnityCG.cginc"
 	#include "Assets/Shaders/Fog.cginc"	
     #include "Assets/Shaders/FishTankLighting.cginc"
+	#include "Assets/Shaders/OceanFloorLight.cginc"
 
 	struct appdata
 	{
@@ -84,6 +92,8 @@ SubShader{
 	float _HeadStart;
 	float _HeadMovement;
 
+	
+
 			//Shadow / light colors
             float4 _AmbientColor;
             float4 _SpecularLightColor;
@@ -97,6 +107,10 @@ SubShader{
             //Rim light settings
             float _RimThreshold;
             float _RimAmount;
+
+
+			//ocean floor
+			float _OceanFloorTransparency;
 
 	//Manipulate the positions of the input verticies to 
 	//fit the motion of a fish
@@ -176,6 +190,13 @@ SubShader{
 
 	color = (light + _AmbientColor) * texColor +
 	 		(_Color * _ColorIntensity);
+
+			 // apply oceanLight (from OceanFloorLight.cginc)
+	color += GetOceanLight
+		(i.worldNormal,
+		i.worldPos,
+		SHADOW_ATTENUATION(i),
+		_OceanFloorTransparency);
 
 	color= ApplyFog(color, i.worldPos);
 

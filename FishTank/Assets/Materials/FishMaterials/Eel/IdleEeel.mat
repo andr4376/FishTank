@@ -70,6 +70,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OceanFloorTransparency: 0.648
     - _Parallax: 0.02
     - _RimAmount: 0
     - _RimThreshold: 0

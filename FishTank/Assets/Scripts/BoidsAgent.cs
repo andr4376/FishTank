@@ -1,4 +1,4 @@
-﻿#define DRAW
+﻿//#define DRAW
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoidStats))]
 public class BoidsAgent : MonoBehaviour
 {
-   protected BoidStats stats;
+    protected BoidStats stats;
 
 #if DEBUG
     private Vector3 flockCenterMassPosition = Vector3.zero;
@@ -15,11 +15,14 @@ public class BoidsAgent : MonoBehaviour
 
     public float cohesionFactor = 1, alignmentFactor = 1, avoidanceFactor = 1;
 
+    public bool interactWithOtherBoids = true;
 
     [Range(0, 1)]
     public float obstacleIgnorance = 1;
 
+
     static private Transform _boidAnchor;
+
     static Transform BoidAnchor
     {
         get
@@ -33,16 +36,22 @@ public class BoidsAgent : MonoBehaviour
         }
     }
 
-    Transform tf;
+    [SerializeField]
+    private LayerMask obstacleLayer;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Init();
 
-        stats = GetComponent<BoidStats>();
-
+        GetComponent<FishMovementScript>().onOutOfBounds += delegate ()
+        {
+            OnOutOfBounds();
+        };
     }
+
+    
 
     protected virtual void Init()
     {
@@ -50,6 +59,9 @@ public class BoidsAgent : MonoBehaviour
         //All boids will appear under the a game object
         transform.SetParent(BoidAnchor, true);
 
+        stats = GetComponent<BoidStats>();
+
+        BoidsManager.AddBoid(this);
     }
 
     // Update is called once per frame
@@ -62,36 +74,37 @@ public class BoidsAgent : MonoBehaviour
     {
         List<BoidsAgent> boidsInRange = new List<BoidsAgent>();
 
-        foreach (BoidsAgent boid in otherBoids)
+        if (interactWithOtherBoids)
         {
-            if (boid == this)
-                continue;
-            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
-                boidsInRange.Add(boid);
+            foreach (BoidsAgent boid in otherBoids)
+            {
+                if (boid == this)
+                    continue;
+                if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
+                    boidsInRange.Add(boid);
+            }
         }
 
-
-
-
-        ///ADD WEIGHTS INSTEAD OF EITHER OR
         bool headingForCollision = ObstacleDetection();
 
 
-        if (otherBoids.Count < 1 || headingForCollision)
-            return;
+        if (!(boidsInRange.Count < 1 || headingForCollision))
+        {
+            Cohesion(
+                boidsInRange,
+                headingForCollision);
 
 
+            Alignment(boidsInRange);
 
-        Cohesion(
-            boidsInRange,
-            headingForCollision);
+            Avoidance(boidsInRange);
+        }
 
+        ExtraBehaviour(headingForCollision);
+    }
 
-        Alignment(boidsInRange);
-
-        Avoidance(boidsInRange);
-        
-
+    protected virtual void ExtraBehaviour(bool headingForCollision)
+    {
 
     }
 
@@ -99,6 +112,9 @@ public class BoidsAgent : MonoBehaviour
 
     protected virtual void Alignment(List<BoidsAgent> boidsInRange)
     {
+        if (alignmentFactor == 0)
+            return;
+
         Vector3 averageRotation = Vector3.zero;
 
         //add all the rotations together
@@ -128,7 +144,7 @@ public class BoidsAgent : MonoBehaviour
         bool headingForColision = false)
     {
 
-        if (boidsInRange.Count < 1)
+        if (boidsInRange.Count < 1 || cohesionFactor == 0)
             return;
 
         Vector3 centerPoint = transform.position;
@@ -153,14 +169,17 @@ public class BoidsAgent : MonoBehaviour
         float steerForce =
             headingForColision ? obstacleIgnorance : 1;
 
-        //SteerTowards(centerPoint, steerForce);
-        MoveTowards(centerPoint,cohesionFactor);
+        SteerTowards(centerPoint, steerForce);
+        //MoveTowards(centerPoint,cohesionFactor);
 
     }
 
 
     protected virtual bool Avoidance(List<BoidsAgent> boidsInRange)
     {
+
+        if (avoidanceFactor == 0)
+            return false;
         Vector3 othersCenterMass = Vector3.zero;
         int count = 0;
 
@@ -182,22 +201,25 @@ public class BoidsAgent : MonoBehaviour
 
         othersCenterMass /= count;
 
-        // SteerInDirection((transform.position - othersCenterMass).normalized,avoidanceFactor);
-        MoveTowards(
+        SteerInDirection((transform.position - othersCenterMass).normalized, avoidanceFactor);
+        /*MoveTowards(
             transform.position+((transform.position-othersCenterMass).normalized *
             Vector3.Distance(transform.position,othersCenterMass)), avoidanceFactor);
-
+*/
         return true;
     }
 
 
     protected virtual bool ObstacleDetection()
-    {/*
+    {
+        /*
         Ray[] rayArray = new Ray[]{
-        new Ray(transform.position, transform.right)
-        ,
+        new Ray(transform.position, transform.right),
         new Ray(transform.position, (transform.forward+transform.right)*0.75f),
-        new Ray(transform.position, (((transform.forward*-1)+transform.right)*0.75f))
+        new Ray(transform.position, (((transform.forward*-1)+transform.right)*0.75f)),
+
+        new Ray(transform.position, (transform.up+transform.right)*0.75f),
+        new Ray(transform.position, (((transform.up*-1)+transform.right)*0.75f))
         };
 
         bool obstacleDetected = false;
@@ -205,43 +227,22 @@ public class BoidsAgent : MonoBehaviour
         RaycastHit hit;
         foreach (Ray ray in rayArray)
         {
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                
+            if (Physics.Raycast(ray, out hit,obstacleLayer))
+            {               
 
                 if (hit.distance <= stats.obstacleDetectionRange)
                 {
-                    float step = (stats.rotationSpeed) * Time.deltaTime;
-                    var targetRotation =
-                        Quaternion.LookRotation(
-                            (hit.point-transform.position)*-1,
-                        Vector3.up);
-                    // transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+                    Debug.DrawLine(ray.origin, hit.point);
 
-
-
-                    //over time
-                    transform.rotation =
-                        Quaternion.Slerp(transform.rotation,
-                        targetRotation, stats.rotationSpeed * Time.deltaTime);
-
-
-
-
-                    obstacleTS = Time.time;
-#if DEBUG
-                    Debug.DrawLine(transform.position, (transform.position + transform.right * stats.obstacleDetectionRange));
-                    Debug.DrawLine(transform.position, (transform.position + transform.forward * stats.obstacleDetectionRange));
-                    Debug.DrawLine(transform.position, (transform.position + -transform.forward * stats.obstacleDetectionRange));
-#endif
+                    MoveTowards(transform.position+((transform.position - hit.point).normalized), 1f);
 
                     obstacleDetected = true;
                 }
             }
         }
+        return obstacleDetected;
         */
-
+        
         bool obstacleDetected = false;
         RaycastHit hit;
 
@@ -249,11 +250,14 @@ public class BoidsAgent : MonoBehaviour
 
         Vector3 detectionStartPos = transform.position;
 
+        
+
         //Detecting straight ahead
         if (Physics.Raycast(
             detectionStartPos,
             transform.right,
-            out hit, stats.obstacleDetectionRange * 0.75f))
+            out hit, stats.obstacleDetectionRange * 0.75f,
+            obstacleLayer))
         {
 
 #if DRAW
@@ -283,7 +287,8 @@ public class BoidsAgent : MonoBehaviour
         if (Physics.Raycast(
             detectionStartPos,
             (transform.forward + transform.right) * angle,
-            out hit, stats.obstacleDetectionRange))
+            out hit, stats.obstacleDetectionRange,
+            obstacleLayer))
         {
 
 #if DRAW
@@ -306,7 +311,8 @@ public class BoidsAgent : MonoBehaviour
             if (Physics.Raycast(
                detectionStartPos,
                ((transform.forward * -1) + transform.right) * angle,
-               out hit, stats.obstacleDetectionRange))
+               out hit, stats.obstacleDetectionRange,
+            obstacleLayer))
             {
 
 #if DRAW
@@ -329,7 +335,8 @@ public class BoidsAgent : MonoBehaviour
         if (Physics.Raycast(
            detectionStartPos,
            (transform.right + transform.up) * angle,
-           out hit, stats.obstacleDetectionRange))
+           out hit, stats.obstacleDetectionRange,
+            obstacleLayer))
         {
 
 #if DRAW
@@ -355,7 +362,8 @@ public class BoidsAgent : MonoBehaviour
             if (Physics.Raycast(
                detectionStartPos,
                (transform.right + (transform.up * -1)) * angle,
-               out hit, stats.obstacleDetectionRange))
+               out hit, stats.obstacleDetectionRange,
+            obstacleLayer))
             {
 
 #if DRAW
@@ -378,7 +386,7 @@ public class BoidsAgent : MonoBehaviour
         }
 
         return obstacleDetected;
-
+        
     }
 
     private void OnDrawGizmos()
@@ -415,8 +423,8 @@ public class BoidsAgent : MonoBehaviour
             transform.rotation =
                 Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(direction) *
-                Quaternion.Euler(new Vector3(0,-90,0)),
-                stats.rotationSpeed* modifier * Time.deltaTime);
+                Quaternion.Euler(new Vector3(0, -90, 0)),
+                stats.rotationSpeed * modifier * Time.deltaTime);
         }
     }
 
@@ -429,10 +437,10 @@ public class BoidsAgent : MonoBehaviour
 
         transform.right = Vector3.Lerp(
             transform.right, point, stats.rotationSpeed * modifier * Time.deltaTime);
-       
-        
-        
-        
+
+
+
+
         /*
         float step = ((stats.rotationSpeed) * Time.deltaTime)*modifier;
         var targetRotation =
@@ -453,6 +461,12 @@ public class BoidsAgent : MonoBehaviour
         point.Normalize();
 
         SteerInDirection(point, modifier);
+    }
+
+
+    protected virtual void OnOutOfBounds()
+    {
+
     }
 
 }

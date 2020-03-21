@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 459836972823613794}
   - component: {fileID: 4170473835888296704}
   - component: {fileID: 5913015335956211653}
-  - component: {fileID: 5374377794326536658}
+  - component: {fileID: -6709821040457121931}
   m_Layer: 8
   m_Name: Eel
   m_TagString: boid
@@ -111,9 +111,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleRange: 0.5
+  ingameScale: 0
   speed: 3
   rotationSpeed: 1
-  obstacleDetectionRange: 15
+  obstacleDetectionRange: 10
   friendDetectionRange: 15
   avoidanceRange: 3.1
   initialSpeed: 0
@@ -152,7 +153,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5374377794326536658
+--- !u!114 &-6709821040457121931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,10 +162,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6105644130136390521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 081c490616c2d57438aebf5751cf8b34, type: 3}
+  m_Script: {fileID: 11500000, guid: 7544d953859fd4f4d9566a4408eaea7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cohesionFactor: 1
-  alignmentFactor: 1
-  avoidanceFactor: 1
+  cohesionFactor: 0
+  alignmentFactor: 0
+  avoidanceFactor: 0
+  interactWithOtherBoids: 0
   obstacleIgnorance: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1025
+  downPullFactor: 0.161

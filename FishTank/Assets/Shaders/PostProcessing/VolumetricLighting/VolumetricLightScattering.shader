@@ -72,7 +72,7 @@
 				float2 uv = i.uv;
 				// Calculate vector from pixel to light source in screen space.    
 				float2 deltaUV = uv - float2(_LightPosX, _LightPosY) / _ScreenParams.xy;
-
+		
 				float lightDist = length(float2(deltaUV.x * 
 				(_ScreenParams.x / _ScreenParams.y), deltaUV.y));
 				

@@ -111,10 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61f96687f8d1e514d8585440a1b4da09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cohesionFactor: 0.4
-  alignmentFactor: 0.8
-  avoidanceFactor: 0.8
+  cohesionFactor: 0.8
+  alignmentFactor: 1
+  avoidanceFactor: 1
   obstacleIgnorance: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!114 &8358647310416152046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,9 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8759f9e9e6c711a45b5129c93148398e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleRange: 0.8
+  scaleRange: 0.426
+  ingameScale: 0
   speed: 8
-  rotationSpeed: 2
+  rotationSpeed: 1.8
   obstacleDetectionRange: 20
   friendDetectionRange: 15
   avoidanceRange: 1.5

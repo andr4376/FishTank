@@ -113,20 +113,21 @@ public class CameraMovementScript : MonoBehaviour
 
     private void MoveTowards(Transform t)
     {
-        float distance = Vector3.Distance(previousPoint.position,
-            nextPoint.position);
+        
 
 
         this.transform.position =
             Vector3.MoveTowards(transform.position, t.position,
-            (movementSpeed * Time.deltaTime) );
+            (movementSpeed * Time.unscaledDeltaTime) );
 
-
+/*
         transform.rotation = 
             Quaternion.Lerp(
                 transform.rotation,
             t.rotation, 
              (rotationSpeed*Time.deltaTime));
+
+    */
     }
 
     private void OnDrawGizmos()

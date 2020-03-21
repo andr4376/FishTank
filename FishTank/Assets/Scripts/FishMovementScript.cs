@@ -17,6 +17,11 @@ public class FishMovementScript : MonoBehaviour
 
     private BoidStats stats;
 
+
+    public delegate void OnOutOfBounds();
+
+    public OnOutOfBounds onOutOfBounds;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -125,7 +130,8 @@ public class FishMovementScript : MonoBehaviour
             }
 
 
-
+            //invoke out of bounds event if not null
+            onOutOfBounds?.Invoke();
 
 
         }

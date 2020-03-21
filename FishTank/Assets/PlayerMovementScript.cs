@@ -31,6 +31,20 @@ public class PlayerMovementScript : MonoBehaviour
 
     private bool isGrounded = false;
 
+    private Camera cam;
+
+    private Camera Cam
+    {
+        get
+        {
+            if (cam==null)
+            {
+                cam = Camera.main;
+            }
+            return cam;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,13 +81,12 @@ public class PlayerMovementScript : MonoBehaviour
 
         Vector3 movement =
             transform.right * x +
-            transform.forward * z;
+            Cam.transform.forward * z;
 
         controller.Move(movement * movementSpeed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButton("Jump"))
         {
-            if(isGrounded)
             vel.y = Mathf.Sqrt(jumpForce * -2 * gravity);
         }
 
