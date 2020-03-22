@@ -1,18 +1,23 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BaracudaScript
     - BoidStats
-    - BoidsAgent
     - BoidsEel
     - BoidsManager
     - BoidsMola
     - CameraMovementScript
+    - ChromieScript
+    - CorkScript
+    - FishClick
     - FishMovementScript
     - FogController
     - MaterialRandomizer
     - PlayerLookScript
     - PlayerMovementScript
+    - ScriptableFishClick
     - SetupOceanFloorScript
+    - SoundManager
     - VolumetricLightController
     - VolumetricLightScatteringCamera
     - VolumetricLightScatteringEffect
@@ -62,53 +67,71 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11386}
+      Script: {instanceID: 11388}
     - Class: 114
-      Script: {instanceID: 11678}
+      Script: {instanceID: 11680}
     - Class: 114
-      Script: {instanceID: 11918}
+      Script: {instanceID: 11692}
     - Class: 114
-      Script: {instanceID: 11944}
+      Script: {instanceID: 11922}
     - Class: 114
-      Script: {instanceID: 12104}
+      Script: {instanceID: 11948}
     - Class: 114
-      Script: {instanceID: 12142}
+      Script: {instanceID: 12108}
     - Class: 114
-      Script: {instanceID: 12162}
+      Script: {instanceID: 12146}
     - Class: 114
-      Script: {instanceID: 12186}
+      Script: {instanceID: 12166}
     - Class: 114
-      Script: {instanceID: 12208}
+      Script: {instanceID: 12184}
     - Class: 114
-      Script: {instanceID: 12236}
+      Script: {instanceID: 12192}
     - Class: 114
-      Script: {instanceID: 12274}
+      Script: {instanceID: 12214}
     - Class: 114
-      Script: {instanceID: 12476}
+      Script: {instanceID: 12280}
     - Class: 114
-      Script: {instanceID: 12576}
+      Script: {instanceID: 12482}
     - Class: 114
-      Script: {instanceID: 12902}
+      Script: {instanceID: 12582}
     - Class: 114
-      Script: {instanceID: 14528}
+      Script: {instanceID: 12908}
     - Class: 114
-      Script: {instanceID: 169674}
+      Script: {instanceID: 21064}
     - Class: 114
-      Script: {instanceID: 223916}
+      Script: {instanceID: 21092}
+    - Class: 114
+      Script: {instanceID: 21124}
+    - Class: 114
+      Script: {instanceID: 64656}
+    - Class: 114
+      Script: {instanceID: 153120}
+    - Class: 114
+      Script: {instanceID: 157824}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
+      Script: {instanceID: 0}
+    - Class: 136
       Script: {instanceID: 0}
     - Class: 143
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -135,6 +158,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: c768180cd4460be0af81bab2540598b1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HeadWaterSurfaceScript
   - hash:
       serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
@@ -257,6 +286,12 @@ ScriptsOnlyBuild:
     className: AspectRatioFitter
   - hash:
       serializedVersion: 2
+      Hash: 50e6dc1393874ee9a80da195b4997166
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BoidsEel
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -371,13 +406,19 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: 417ab0af9ea21a429f6dec0a0b0d3c64
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BoidsMola
+  - hash:
+      serializedVersion: 2
       Hash: e2f1bc4f9789ca2b31e11fc82758ecb0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FishMovementScript
   - hash:
       serializedVersion: 2
-      Hash: dc38c27f90ed9f5c03f2d6338eb092f5
+      Hash: 8bd8fd35e5f3ec12f25ce43ba80e85fd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerLookScript
@@ -641,16 +682,46 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 50e6dc1393874ee9a80da195b4997166
+      Hash: 31f1f6e8d053851bed0fc752eda1f2b3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: BoidsEel
+    className: Clickable
   - hash:
       serializedVersion: 2
-      Hash: 417ab0af9ea21a429f6dec0a0b0d3c64
+      Hash: 65b9f4ccf914a725b8e2a9b698640597
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: BoidsMola
+    className: SoundManager
+  - hash:
+      serializedVersion: 2
+      Hash: 105e5dc714d77d2943d9c145db56c79e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FishClick
+  - hash:
+      serializedVersion: 2
+      Hash: 082514a016025fd8506fc6406a23677e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ScriptableFishClick
+  - hash:
+      serializedVersion: 2
+      Hash: 646a5d8ae9aade4015dbe2e450dd426c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CorkScript
+  - hash:
+      serializedVersion: 2
+      Hash: 3723525798c55d38fd5e6298fc93e8fa
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChromieScript
+  - hash:
+      serializedVersion: 2
+      Hash: a471d246776fc2179c3c79f92a8d3c8d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BaracudaScript
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

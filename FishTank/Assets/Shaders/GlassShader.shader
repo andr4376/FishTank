@@ -37,7 +37,7 @@
         Tags { "RenderType"="Transparent"
                 "LightMode" = "ForwardBase"
 			    "PassFlags" = "OnlyDirectional"
-                "RenderQueue"="Transparent" }
+                 }
         LOD 100
         
 

@@ -120,14 +120,14 @@ public class CameraMovementScript : MonoBehaviour
             Vector3.MoveTowards(transform.position, t.position,
             (movementSpeed * Time.unscaledDeltaTime) );
 
-/*
+
         transform.rotation = 
             Quaternion.Lerp(
                 transform.rotation,
             t.rotation, 
              (rotationSpeed*Time.deltaTime));
 
-    */
+    
     }
 
     private void OnDrawGizmos()

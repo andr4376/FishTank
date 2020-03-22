@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 6105644130136390523}
   - component: {fileID: 6105644130136390524}
   - component: {fileID: 459836972823613794}
-  - component: {fileID: 4170473835888296704}
   - component: {fileID: 5913015335956211653}
   - component: {fileID: -6709821040457121931}
+  - component: {fileID: 4743169755701842256}
+  - component: {fileID: 7063088690300472084}
   m_Layer: 8
   m_Name: Eel
   m_TagString: boid
@@ -124,19 +125,6 @@ MonoBehaviour:
   maxSpeed: 3
   minSpeed: 1
   verticalRotationMultiplier: 20
---- !u!135 &4170473835888296704
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6105644130136390521}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5913015335956211653
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -174,3 +162,30 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1025
   downPullFactor: 0.161
+--- !u!136 &4743169755701842256
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6105644130136390521}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.46
+  m_Height: 13.73
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7063088690300472084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6105644130136390521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167519aeb41afe04c8f6f0eb66899e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishClick: {fileID: 11400000, guid: df160cf8fb46db741a06100892992657, type: 2}

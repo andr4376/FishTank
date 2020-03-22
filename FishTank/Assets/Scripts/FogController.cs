@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -50,6 +51,18 @@ public class FogController : MonoBehaviour
     {
 
         UpdateShader();
+
+        HeadWaterSurfaceScript.OnAboveWater e = delegate ()
+        {
+            ToggleFog();
+        };
+
+        HeadWaterSurfaceScript.AddOnAboveWaterEvent(e);
+    }
+
+    private void ToggleFog()
+    {
+        _FogIntensity = _FogIntensity > 0 ? 0 : 1;
     }
 
     private void UpdateShader()

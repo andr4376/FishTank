@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2808651845424982457}
   - component: {fileID: 1591081272923453995}
   - component: {fileID: 1706927992099985622}
+  - component: {fileID: -3664087032700471202}
   m_Layer: 0
   m_Name: MolaMola
   m_TagString: Untagged
@@ -174,3 +175,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.78
   m_Center: {x: -0.057804998, y: 0.017270086, z: -0.0000021755693}
+--- !u!114 &-3664087032700471202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808651845424982458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167519aeb41afe04c8f6f0eb66899e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishClick: {fileID: 11400000, guid: d049e9b2d5172f74e931cd011820d975, type: 2}

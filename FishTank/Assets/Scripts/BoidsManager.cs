@@ -122,7 +122,10 @@ public class BoidsManager : MonoBehaviour
         return spawnPoint;
     }
 
-    
+    public static void RemoveBoid(BoidsAgent boidsAgent)
+    {
+        Instance.boids.Remove(boidsAgent);
+    }
 }
 
 [System.Serializable]

@@ -48,9 +48,11 @@
 
 		Pass
 		{
+			Cull Off
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+
 
 			//OBS: Include if using FishTankLighting.cginc!!
             //Compiles multiple versions based on light settings

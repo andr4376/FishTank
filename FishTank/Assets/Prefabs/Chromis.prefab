@@ -12,14 +12,15 @@ GameObject:
   - component: {fileID: 2388544733630001142}
   - component: {fileID: 2388544733630001143}
   - component: {fileID: 2388544733630001136}
-  - component: {fileID: 2388544733630001139}
   - component: {fileID: 8358647310416152046}
   - component: {fileID: 5511902232463923084}
   - component: {fileID: 2851071195758228297}
   - component: {fileID: -263612857130331216}
+  - component: {fileID: -5545021555310721704}
+  - component: {fileID: 8397019440139509929}
   m_Layer: 8
   m_Name: Chromis
-  m_TagString: boid
+  m_TagString: Chromie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,25 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounceSpeed: 4
   bounceFrequency: 2
---- !u!114 &2388544733630001139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2388544733630001141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61f96687f8d1e514d8585440a1b4da09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cohesionFactor: 0.8
-  alignmentFactor: 1
-  avoidanceFactor: 1
-  obstacleIgnorance: 0
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 1025
 --- !u!114 &8358647310416152046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +137,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2851071195758228297
 Rigidbody:
@@ -189,3 +171,38 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7b149d96233b92f4a87cae27dac288b7, type: 2}
   - {fileID: 2100000, guid: 55d161a073834db44b2ccd6234124c5e, type: 2}
   - {fileID: 2100000, guid: 0e23f2350f1d5eb4eae64e2427aaf823, type: 2}
+--- !u!114 &-5545021555310721704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388544733630001141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167519aeb41afe04c8f6f0eb66899e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 0}
+  volume: 0
+  fishClick: {fileID: 11400000, guid: 4cb64991ab5c0984ba870e6a830af4f5, type: 2}
+--- !u!114 &8397019440139509929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388544733630001141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121ee6c5d2e81b540a74954461ee789c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cohesionFactor: 0.8
+  alignmentFactor: 1
+  avoidanceFactor: 1
+  interactWithOtherBoids: 1
+  obstacleIgnorance: 0.45
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1025

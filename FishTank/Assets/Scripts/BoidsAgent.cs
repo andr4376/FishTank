@@ -88,8 +88,16 @@ public class BoidsAgent : MonoBehaviour
         bool headingForCollision = ObstacleDetection();
 
 
+
         if (!(boidsInRange.Count < 1 || headingForCollision))
         {
+
+            bool shouldContinue = PriorityBehaviour(boidsInRange);
+
+            if (shouldContinue)
+            {
+
+
             Cohesion(
                 boidsInRange,
                 headingForCollision);
@@ -98,9 +106,16 @@ public class BoidsAgent : MonoBehaviour
             Alignment(boidsInRange);
 
             Avoidance(boidsInRange);
+            }
         }
 
         ExtraBehaviour(headingForCollision);
+    }
+
+    protected virtual bool PriorityBehaviour(List<BoidsAgent> boidsInRange)
+    {
+
+        return true;
     }
 
     protected virtual void ExtraBehaviour(bool headingForCollision)
@@ -108,7 +123,10 @@ public class BoidsAgent : MonoBehaviour
 
     }
 
-
+    private void OnDestroy()
+    {
+        BoidsManager.RemoveBoid(this);
+    }
 
     protected virtual void Alignment(List<BoidsAgent> boidsInRange)
     {
