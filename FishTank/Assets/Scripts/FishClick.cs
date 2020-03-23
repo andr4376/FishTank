@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FishClick : Clickable
 {
-    public ScriptableFishClick fishClick;
+    [SerializeField]
+    protected ScriptableFishClick fishClick;
 
     private float timestamp;
 
@@ -21,7 +22,7 @@ public class FishClick : Clickable
    
         if (timestamp+fishClick.coolDown <= Time.time)
         {
-        Debug.Log(fishClick.reward);
+            ScoreManager.Score += fishClick.reward * Upgrades.pointModifiers[fishClick.type];
 
         timestamp = Time.time;
 

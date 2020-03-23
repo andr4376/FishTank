@@ -6,6 +6,7 @@ using UnityEngine;
 public class ScriptableFishClick : ScriptableObject
 {
     public int reward;
+    public FISH type;
 
     public AudioClip sounds;
     public float soundVolume;

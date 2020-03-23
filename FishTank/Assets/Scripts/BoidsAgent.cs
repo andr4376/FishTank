@@ -78,7 +78,7 @@ public class BoidsAgent : MonoBehaviour
         {
             foreach (BoidsAgent boid in otherBoids)
             {
-                if (boid == this)
+                if (boid == null || boid == this )
                     continue;
                 if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
                     boidsInRange.Add(boid);

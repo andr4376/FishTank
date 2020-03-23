@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Mola
   m_EditorClassIdentifier: 
   reward: 10
-  sounds: {fileID: 8300000, guid: 80319b6731c1e7940b8ed35c3bd880f0, type: 3}
+  type: 2
+  sounds: {fileID: 8300000, guid: c49b5a78a86d95045ae298f92c4e703f, type: 3}
   soundVolume: 0.2
   coolDown: 2

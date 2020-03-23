@@ -29,4 +29,15 @@ public class ChromieScript : BoidsAgent
 
         return true;
     }
+
+    protected override void Init()
+    {
+        BoidsManager.chromieCount++;
+        base.Init();
+    }
+    private void OnDestroy()
+    {
+        BoidsManager.chromieCount--;
+
+    }
 }

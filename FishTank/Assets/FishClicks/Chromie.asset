@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Chromie
   m_EditorClassIdentifier: 
   reward: 1
-  sounds: {fileID: 8300000, guid: e5018e46179952047be073a79c681c4f, type: 3}
+  sounds: {fileID: 8300000, guid: 1f7ee25ff6de7b842934b74368614a7e, type: 3}
   soundVolume: 0.05
   coolDown: 0.5

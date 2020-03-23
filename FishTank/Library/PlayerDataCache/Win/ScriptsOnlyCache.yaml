@@ -8,6 +8,7 @@ ScriptsOnlyBuild:
     - BoidsMola
     - CameraMovementScript
     - ChromieScript
+    - Clickable
     - CorkScript
     - FishClick
     - FishMovementScript
@@ -15,12 +16,14 @@ ScriptsOnlyBuild:
     - MaterialRandomizer
     - PlayerLookScript
     - PlayerMovementScript
+    - ScoreTextScript
     - ScriptableFishClick
     - SetupOceanFloorScript
     - SoundManager
     - VolumetricLightController
     - VolumetricLightScatteringCamera
     - VolumetricLightScatteringEffect
+    - barracudaClick
     - directionalLightScript
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -35,10 +38,22 @@ ScriptsOnlyBuild:
     - UnityEditor.Experimental.TerrainAPI.StrataFractalType
     - UnityEditor.Experimental.TerrainAPI.ValueNoise
     - UnityEditor.Experimental.TerrainAPI.VoronoiNoise
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TMP_Settings
+    - TMPro.TMP_SpriteAsset
+    - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+    UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -59,6 +74,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
     - Class: 64
@@ -75,49 +92,79 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
+    - Class: 109
+      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11388}
+      Script: {instanceID: 11266}
     - Class: 114
-      Script: {instanceID: 11680}
+      Script: {instanceID: 11390}
     - Class: 114
-      Script: {instanceID: 11692}
+      Script: {instanceID: 11500}
     - Class: 114
-      Script: {instanceID: 11922}
+      Script: {instanceID: 11668}
     - Class: 114
-      Script: {instanceID: 11948}
+      Script: {instanceID: 11684}
     - Class: 114
-      Script: {instanceID: 12108}
+      Script: {instanceID: 11696}
     - Class: 114
-      Script: {instanceID: 12146}
+      Script: {instanceID: 11794}
     - Class: 114
-      Script: {instanceID: 12166}
+      Script: {instanceID: 11796}
     - Class: 114
-      Script: {instanceID: 12184}
+      Script: {instanceID: 11926}
     - Class: 114
-      Script: {instanceID: 12192}
+      Script: {instanceID: 11930}
     - Class: 114
-      Script: {instanceID: 12214}
+      Script: {instanceID: 11956}
     - Class: 114
-      Script: {instanceID: 12280}
+      Script: {instanceID: 11960}
     - Class: 114
-      Script: {instanceID: 12482}
+      Script: {instanceID: 12000}
     - Class: 114
-      Script: {instanceID: 12582}
+      Script: {instanceID: 12058}
     - Class: 114
-      Script: {instanceID: 12908}
+      Script: {instanceID: 12120}
     - Class: 114
-      Script: {instanceID: 21064}
+      Script: {instanceID: 12158}
     - Class: 114
-      Script: {instanceID: 21092}
+      Script: {instanceID: 12178}
     - Class: 114
-      Script: {instanceID: 21124}
+      Script: {instanceID: 12196}
     - Class: 114
-      Script: {instanceID: 64656}
+      Script: {instanceID: 12204}
     - Class: 114
-      Script: {instanceID: 153120}
+      Script: {instanceID: 12226}
     - Class: 114
-      Script: {instanceID: 157824}
+      Script: {instanceID: 12292}
+    - Class: 114
+      Script: {instanceID: 12494}
+    - Class: 114
+      Script: {instanceID: 12594}
+    - Class: 114
+      Script: {instanceID: 12644}
+    - Class: 114
+      Script: {instanceID: 12658}
+    - Class: 114
+      Script: {instanceID: 12670}
+    - Class: 114
+      Script: {instanceID: 12872}
+    - Class: 114
+      Script: {instanceID: 12922}
+    - Class: 114
+      Script: {instanceID: 12946}
+    - Class: 114
+      Script: {instanceID: 13112}
+    - Class: 114
+      Script: {instanceID: 13258}
+    - Class: 114
+      Script: {instanceID: 13352}
+    - Class: 114
+      Script: {instanceID: 16208}
+    - Class: 114
+      Script: {instanceID: 72532}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
@@ -132,6 +179,14 @@ ScriptsOnlyBuild:
     - Class: 198
       Script: {instanceID: 0}
     - Class: 199
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -268,6 +323,12 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 31f1f6e8d053851bed0fc752eda1f2b3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Clickable
+  - hash:
+      serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -310,6 +371,18 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 65b9f4ccf914a725b8e2a9b698640597
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SoundManager
+  - hash:
+      serializedVersion: 2
+      Hash: 8966c73c56988d87fc58f178d7320390
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ScriptableFishClick
+  - hash:
+      serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -340,7 +413,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: a46f0246a45f9a3ae0bfd737b8af1010
+      Hash: 455b2e325e3a61c98bab5025016b81ab
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BoidsManager
@@ -362,6 +435,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
+  - hash:
+      serializedVersion: 2
+      Hash: 646a5d8ae9aade4015dbe2e450dd426c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CorkScript
+  - hash:
+      serializedVersion: 2
+      Hash: 3723525798c55d38fd5e6298fc93e8fa
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChromieScript
   - hash:
       serializedVersion: 2
       Hash: 3723525798c55d38fd5e6298fc93e8fa
@@ -532,6 +617,12 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 3c3d76bd88db554f3ea7cead4d070d74
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BaracudaScript
+  - hash:
+      serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -602,6 +693,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: PlayModeRunnerCallback
+  - hash:
+      serializedVersion: 2
+      Hash: 105e5dc714d77d2943d9c145db56c79e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FishClick
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -682,46 +779,16 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 31f1f6e8d053851bed0fc752eda1f2b3
+      Hash: 86287ef4d4ed13c759b9a309f8964b9e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Clickable
+    className: barracudaClick
   - hash:
       serializedVersion: 2
-      Hash: 65b9f4ccf914a725b8e2a9b698640597
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: SoundManager
-  - hash:
-      serializedVersion: 2
-      Hash: 105e5dc714d77d2943d9c145db56c79e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FishClick
-  - hash:
-      serializedVersion: 2
-      Hash: 082514a016025fd8506fc6406a23677e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ScriptableFishClick
-  - hash:
-      serializedVersion: 2
-      Hash: 646a5d8ae9aade4015dbe2e450dd426c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CorkScript
-  - hash:
-      serializedVersion: 2
-      Hash: 3723525798c55d38fd5e6298fc93e8fa
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ChromieScript
-  - hash:
-      serializedVersion: 2
-      Hash: a471d246776fc2179c3c79f92a8d3c8d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: BaracudaScript
+    className: ScoreTextScript
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

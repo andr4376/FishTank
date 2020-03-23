@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3279741755920088286}
   - component: {fileID: 3279741755920088272}
   - component: {fileID: -4733592179379478319}
+  - component: {fileID: -142143361402194000}
   m_Layer: 0
   m_Name: Barracuda
   m_TagString: Untagged
@@ -176,3 +177,21 @@ MonoBehaviour:
     m_Bits: 1025
   hunger: 100
   hungerDrainrate: 0.5
+  summonMoreBarracudasKC: 10
+  killCount: 0
+--- !u!114 &-142143361402194000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3279741755920088273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f908787a9508954dbfab0e08bc59fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 0}
+  volume: 0
+  fishClick: {fileID: 11400000, guid: d49d37bafe4679845938a513796e96a2, type: 2}
+  feedAmount: 30
