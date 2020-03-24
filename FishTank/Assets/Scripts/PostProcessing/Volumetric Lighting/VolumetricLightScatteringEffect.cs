@@ -11,6 +11,11 @@ public class VolumetricLightScatteringEffect : MonoBehaviour
 	private void Start()
 	{
 		_camera = GetComponent<Camera>();
+
+        if (SaveManager.ValidSave)
+        {
+            this.enabled = SaveManager.Settings.volumetricLighting;
+        }
 	}
 
 	private void OnRenderImage(RenderTexture src, RenderTexture dst)

@@ -31,12 +31,12 @@ public class BoidsEel : BoidsAgent
    
     protected override void Init()
     {
-        BoidsManager.eelCount++;
+        BoidsManager.EelCount++;
         base.Init();
     }
     private void OnDestroy()
     {
-        BoidsManager.eelCount--;
+        BoidsManager.EelCount--;
 
     }
 }

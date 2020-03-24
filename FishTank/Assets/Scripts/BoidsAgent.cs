@@ -2,12 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BoidStats))]
 public class BoidsAgent : MonoBehaviour
 {
-    protected BoidStats stats;
+    public BoidStats stats;
 
 #if DEBUG
     private Vector3 flockCenterMassPosition = Vector3.zero;
@@ -51,7 +52,7 @@ public class BoidsAgent : MonoBehaviour
         };
     }
 
-    
+
 
     protected virtual void Init()
     {
@@ -76,39 +77,59 @@ public class BoidsAgent : MonoBehaviour
 
         if (interactWithOtherBoids)
         {
-            foreach (BoidsAgent boid in otherBoids)
+            //boids in range
+            //are those who are not me, and is withing my range
+            /*boidsInRange = otherBoids.Where(
+                x => x != this &&
+                Vector3.Distance(transform.position, x.transform.position) <=
+                stats.otherBoidsDetectionRange
+                ).ToList();
+*/
+
+            foreach (BoidsAgent item in otherBoids)
             {
-                if (boid == null || boid == this )
-                    continue;
-                if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
-                    boidsInRange.Add(boid);
+                if (item!= this && Vector3.Distance(transform.position, item.transform.position) <=
+                stats.otherBoidsDetectionRange)
+                {
+                    boidsInRange.Add(item);
+                }
             }
+
+
         }
 
+        //Ray casts in multiple directions and moves accordingly
         bool headingForCollision = ObstacleDetection();
 
 
-
+        //if i am not heading towards a collision and i do have friends near me
         if (!(boidsInRange.Count < 1 || headingForCollision))
         {
 
+            //Chromies flee from barracudas
+            //barracudas hunt Chromies (if hungry)            
+            //Ect.
             bool shouldContinue = PriorityBehaviour(boidsInRange);
 
             if (shouldContinue)
             {
 
+                //Steer towards the center mass of all the boids in range
+                Cohesion(
+                    boidsInRange,
+                    headingForCollision);
 
-            Cohesion(
-                boidsInRange,
-                headingForCollision);
+                //Adjust rotation towards the average rotation of the flock
+                Alignment(boidsInRange);
 
-
-            Alignment(boidsInRange);
-
-            Avoidance(boidsInRange);
+                //Steer away from other boids who are too close
+                Avoidance(boidsInRange);
             }
         }
 
+        //eels move towards the ground
+        //Molas (sun fish) moves towards the surface
+        //Ect.
         ExtraBehaviour(headingForCollision);
     }
 
@@ -260,7 +281,7 @@ public class BoidsAgent : MonoBehaviour
         }
         return obstacleDetected;
         */
-        
+
         bool obstacleDetected = false;
         RaycastHit hit;
 
@@ -268,7 +289,7 @@ public class BoidsAgent : MonoBehaviour
 
         Vector3 detectionStartPos = transform.position;
 
-        
+
 
         //Detecting straight ahead
         if (Physics.Raycast(
@@ -404,7 +425,7 @@ public class BoidsAgent : MonoBehaviour
         }
 
         return obstacleDetected;
-        
+
     }
 
     private void OnDrawGizmos()

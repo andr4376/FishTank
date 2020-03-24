@@ -30,12 +30,12 @@ public class BoidsMola : BoidsAgent
 
     protected override void Init()
     {
-        BoidsManager.molaCount++;
+        BoidsManager.MolaCount++;
         base.Init();
     }
     private void OnDestroy()
     {
-        BoidsManager.molaCount--;
+        BoidsManager.MolaCount--;
 
     }
 }

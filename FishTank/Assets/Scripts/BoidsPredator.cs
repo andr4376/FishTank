@@ -26,7 +26,7 @@ public class BoidsPredator : BoidsAgent
         {
             if (boid == this)
                 continue;
-            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
+            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.otherBoidsDetectionRange)
                 boidsInRange.Add(boid);
         }
                

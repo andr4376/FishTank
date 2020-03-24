@@ -50,6 +50,7 @@
             #pragma vertex vert
             #pragma fragment frag
 			#pragma multi_compile_fwdbase
+            //Transparency
             #pragma Standard fullforwardshadows alpha
 
             #include "UnityCG.cginc"
@@ -61,9 +62,7 @@
             struct appdata
             {
                 float4 vertex : POSITION;
-               	float3 normal : NORMAL;
-
-				
+               	float3 normal : NORMAL;			
 
             };
 

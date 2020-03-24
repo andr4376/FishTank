@@ -132,7 +132,7 @@ MonoBehaviour:
   speed: 0
   rotationSpeed: 2
   obstacleDetectionRange: 15
-  friendDetectionRange: 19
+  otherBoidsDetectionRange: 15
   avoidanceRange: 1.47
   initialSpeed: 0
   initialRrotationSpeed: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4985a56a49e9b314990ab558b391aca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
   cohesionFactor: 0
   alignmentFactor: 0
   avoidanceFactor: 0

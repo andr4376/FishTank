@@ -10,12 +10,20 @@ public static class SaveManager
 
     private static string filepath = "/SaveData.save";
 
-    private static int tickAutosaveFrequency = 30;
+    private static int tickAutosaveFrequency = 30; //seconds at the moment
     private static int tickCount = 0;
+
+    public delegate void OnSettingsChanged();
+    public static OnSettingsChanged onSettingsChanged;
 
     public static SaveData Save
     {
         get { return save; }
+    }
+
+    public static Settings Settings
+    {
+        get { return Save.settings; }
     }
 
     public static bool ValidSave
@@ -45,6 +53,12 @@ public static class SaveManager
              };
         }
 
+    }
+
+
+    public static void SettingsHasChanged()
+    {
+        onSettingsChanged?.Invoke();
     }
 
     public static void DeleteSave()
@@ -113,7 +127,7 @@ public static class SaveManager
     {
         tickCount++;
 
-        if(tickCount%tickAutosaveFrequency == 0)
+        if (tickCount % tickAutosaveFrequency == 0)
         {
             SaveGame();
             Debug.Log("Auto saved!");
@@ -138,21 +152,48 @@ public class SaveData
 
     public float score = 0;
 
+    public Settings settings = new Settings();
+
     public bool valid = false;
+
+    public int[] barracudasHunger;
+    public int[] barracudasKC;
 
     public void Update()
     {
-        chromieCount = BoidsManager.chromieCount;
-        eelCount = BoidsManager.eelCount;
-        molaCount = BoidsManager.molaCount;
-        barracudaCount = BoidsManager.barracudaCount;
+        chromieCount = BoidsManager.ChromisCount;
+        eelCount = BoidsManager.EelCount;
+        molaCount = BoidsManager.MolaCount;
+        barracudaCount = BoidsManager.BarracudaCount;
 
-        chromiePointModifier = Upgrades.pointModifiers[FISH.CHROMIE];
-        eelPointModifier = Upgrades.pointModifiers[FISH.EEL];
-        molaPointModifier = Upgrades.pointModifiers[FISH.MOLA];
+        chromiePointModifier = Upgrades.PointModifiers[FISH.CHROMIE];
+        eelPointModifier = Upgrades.PointModifiers[FISH.EEL];
+        molaPointModifier = Upgrades.PointModifiers[FISH.MOLA];
 
         score = ScoreManager.Score;
 
+        SaveBarracudas();
+
         valid = true;
+    }
+
+    private void SaveBarracudas()
+    {
+        
+        List<BoidsAgent> bCudaAgents = BoidsManager.GetBarracudas();
+
+        barracudasHunger = new int[bCudaAgents.Count];
+        barracudasKC = new int[bCudaAgents.Count];
+
+
+        for (int i = 0; i < bCudaAgents.Count; i++)
+        {
+            BaracudaScript cuda = bCudaAgents[i] as BaracudaScript;
+
+            barracudasHunger[i] = (int)cuda.Hunger;
+            barracudasKC[i] = cuda.killCount;
+
+        }
+        
     }
 }

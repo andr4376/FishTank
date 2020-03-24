@@ -23,7 +23,7 @@ public class BaracudaScript : BoidsAgent
     int summonMoreBarracudasKC = 10;
 
     [Header("Show In inspector:")]
-    [SerializeField] private int killCount = 0;
+    [SerializeField] public int killCount = 0;
 
 
     [HideInInspector]
@@ -70,12 +70,12 @@ public class BaracudaScript : BoidsAgent
 
     protected override void Init()
     {
-        BoidsManager.barracudaCount++;
+        BoidsManager.BarracudaCount++;
         base.Init();
     }
     private void OnDestroy()
     {
-        BoidsManager.barracudaCount--;
+        BoidsManager.BarracudaCount--;
 
     }
 

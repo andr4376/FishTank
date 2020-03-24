@@ -27,6 +27,22 @@ public class FogController : MonoBehaviour
     [Range(0, 2)]
     [SerializeField] private float _HeightFogIntensity = 0.7f;
 
+    private float FogDistance
+    {
+        get
+        {
+            float fog = _fogEnd;
+            if (SaveManager.ValidSave)
+            {
+                fog *= SaveManager.Settings.fogDistance;
+
+                if (fog <= _fogStart)
+                    fog = _fogStart;
+
+            }
+            return fog;
+        }
+    }
 
     private Camera cam;
 
@@ -42,9 +58,7 @@ public class FogController : MonoBehaviour
     }
     private void Update()
     {
-#if UNITY_EDITOR
         UpdateShader();
-#endif
     }
 
     private void Start()
@@ -52,6 +66,7 @@ public class FogController : MonoBehaviour
 
         UpdateShader();
 
+        //for prototype fps scene
         HeadWaterSurfaceScript.OnAboveWater e = delegate ()
         {
             ToggleFog();
@@ -72,7 +87,10 @@ public class FogController : MonoBehaviour
 
         Shader.SetGlobalColor(FogColorKeyword, _fogColor);
         Shader.SetGlobalFloat(FogStartKeyword, _fogStart);
-        Shader.SetGlobalFloat(FogEndKeyword, _fogEnd);
+
+
+
+        Shader.SetGlobalFloat(FogEndKeyword, FogDistance);
         Shader.SetGlobalFloat(HeightFogStartKeyword, _heightFogStart);
         Shader.SetGlobalFloat(HeightFogEndKeyword, _heightFogEnd);
         Shader.SetGlobalFloat(_HeightFogIntensityKW, _HeightFogIntensity);

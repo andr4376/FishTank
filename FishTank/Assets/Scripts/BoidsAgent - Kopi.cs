@@ -37,7 +37,7 @@ public class BoidsAgentold : MonoBehaviour
         {
             if (boid == this)
                 continue;
-            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.friendDetectionRange)
+            if (Vector3.Distance(transform.position, boid.transform.position) <= stats.otherBoidsDetectionRange)
                 boidsInRange.Add(boid);
         }
 
@@ -218,7 +218,7 @@ public class BoidsAgentold : MonoBehaviour
         if (stats == null)
             return;
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, stats.friendDetectionRange);
+        Gizmos.DrawWireSphere(transform.position, stats.otherBoidsDetectionRange);
 
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(flockCenterMassPosition, .3f);

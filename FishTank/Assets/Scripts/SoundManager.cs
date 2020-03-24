@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum SOUNDS { EAT_SOUND };
+public enum SOUNDS { EAT_SOUND, INVALID_INPUT };
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
@@ -57,7 +57,7 @@ public class SoundManager : MonoBehaviour
     private void _PlayAudio(SOUNDS sound, float volume = 1)
     {
         aS.pitch += UnityEngine.Random.Range(-0.2f, 0.2f);
-        aS.PlayOneShot(audioClipsDic[sound], volume);
+        aS.PlayOneShot(audioClipsDic[sound], volume * SaveManager.Settings.soundEffectVolume);
         aS.pitch = 1;
 
     }
@@ -65,7 +65,7 @@ public class SoundManager : MonoBehaviour
     {
         aS.pitch = 1;
         aS.pitch += UnityEngine.Random.Range(-0.2f, 0.2f);
-        aS.PlayOneShot(sound, volume);
+        aS.PlayOneShot(sound, volume * SaveManager.Settings.soundEffectVolume);
 
     }
 

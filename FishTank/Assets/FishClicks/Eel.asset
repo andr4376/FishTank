@@ -15,5 +15,5 @@ MonoBehaviour:
   reward: 3
   type: 1
   sounds: {fileID: 8300000, guid: 59979439c2a44f348b9d5c57fc091c1e, type: 3}
-  soundVolume: 0.2
+  soundVolume: 0.12
   coolDown: 1

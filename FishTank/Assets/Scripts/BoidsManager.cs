@@ -7,6 +7,8 @@ using UnityEngine;
 public enum FISH { CHROMIE, EEL, MOLA, BARRACUDA }
 public class BoidsManager : MonoBehaviour
 {
+    public delegate void OnPopulationChanged();
+    public static OnPopulationChanged onPopulationChanged;
 
     private List<BoidsAgent> boids;
 
@@ -25,10 +27,62 @@ public class BoidsManager : MonoBehaviour
     [Range(3, 30)]
     float spawnRadius;
 
-    public static int chromieCount;
-    public static int eelCount;
-    public static int molaCount;
-    public static int barracudaCount;
+    #region FishCounts
+
+    private static int chromisCount;
+    private static int eelCount;
+    private static int molaCount;
+    private static int barracudaCount;
+
+    public static int ChromisCount
+    {
+        get
+        {
+            return chromisCount;
+        }
+        set
+        {
+            chromisCount = value;
+            onPopulationChanged?.Invoke();
+        }
+    }
+    public static int EelCount
+    {
+        get
+        {
+            return eelCount;
+        }
+        set
+        {
+            eelCount = value;
+            onPopulationChanged?.Invoke();
+        }
+    }
+    public static int MolaCount
+    {
+        get
+        {
+            return molaCount;
+        }
+        set
+        {
+            molaCount = value;
+            onPopulationChanged?.Invoke();
+        }
+    }
+    public static int BarracudaCount
+    {
+        get
+        {
+            return barracudaCount;
+        }
+        set
+        {
+            barracudaCount = value;
+            onPopulationChanged?.Invoke();
+        }
+    }
+    #endregion
 
     private List<BoidsAgent> boidsToRemove = new List<BoidsAgent>();
     private List<BoidsAgent> boidsToAdd = new List<BoidsAgent>();
@@ -73,7 +127,7 @@ public class BoidsManager : MonoBehaviour
 
 
         //Spawn Chromies
-        prefab = 
+        prefab =
             boidsToSpawn.Where(x => x.type == FISH.CHROMIE).ElementAt(0).boid;
 
         for (int i = 0; i < SaveManager.Save.chromieCount; i++)
@@ -91,7 +145,7 @@ public class BoidsManager : MonoBehaviour
                 UnityEngine.Random.Range(-spawnRadius, spawnRadius),
                 UnityEngine.Random.Range(-spawnRadius, spawnRadius));
 
-            boid.name =  "Chromie #" + (i + 1);
+            boid.name = "Chromie #" + (i + 1);
         }
 
 
@@ -154,8 +208,18 @@ public class BoidsManager : MonoBehaviour
                 UnityEngine.Random.Range(-spawnRadius, spawnRadius));
 
             boid.name = "Barracuda #" + (i + 1);
+
+            BaracudaScript bScript = boid.GetComponent<BaracudaScript>();
+
+            bScript.Hunger = SaveManager.Save.barracudasHunger[i];
+            bScript.killCount = SaveManager.Save.barracudasKC[i];
         }
 
+    }
+
+    public static List<BoidsAgent> GetBarracudas()
+    {
+        return Instance.boids.Where(x => x is BaracudaScript).ToList();
     }
 
     private void SpawnBoids()
@@ -170,7 +234,7 @@ public class BoidsManager : MonoBehaviour
                 GameObject boid;
 
                 spawnPosition = spawnPoints[
-                i%spawnPoints.Length];
+                i % spawnPoints.Length];
 
                 boid = GameObject.Instantiate(boiType.boid,
                     spawnPosition.position, spawnPosition.rotation);
@@ -203,9 +267,10 @@ public class BoidsManager : MonoBehaviour
 
         RemoveBoids();
 
+#if DEBUG
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Chromie " + chromieCount);
+            Debug.Log("Chromie " + chromisCount);
             Debug.Log("Eel " + eelCount);
             Debug.Log("Mola  " + molaCount);
             Debug.Log("Barracuda " + barracudaCount);
@@ -216,6 +281,7 @@ public class BoidsManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Delete))
             SaveManager.DeleteSave();
+#endif
 
     }
 
@@ -276,7 +342,6 @@ public class BoidsManager : MonoBehaviour
 
         GameObject go = Instantiate(boidType.boid, spawn.position, spawn.rotation);
 
-        boidsToAdd.Add(go.GetComponent<BoidsAgent>());
     }
 
 

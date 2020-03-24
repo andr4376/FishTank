@@ -22,6 +22,6 @@ public class ScoreTextScript : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        text.text = ((int)ScoreManager.Score).ToString();
+        text.text = ScoreManager.Score.ToString("n");
     }
 }

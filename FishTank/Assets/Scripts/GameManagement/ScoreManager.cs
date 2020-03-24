@@ -64,17 +64,17 @@ public static class ScoreManager
         if (Time.time >= tickTS + tickInterval)
         {
             float sum = 0;
-            sum += BoidsManager.chromieCount *
+            sum += BoidsManager.ChromisCount *
                 (fishPassivePoints[FISH.CHROMIE] *
-                Upgrades.pointModifiers[FISH.CHROMIE]);
+                Upgrades.GetUpgradeModifier(FISH.CHROMIE));
 
-            sum += BoidsManager.eelCount *
+            sum += BoidsManager.EelCount *
                 (fishPassivePoints[FISH.EEL] *
-                Upgrades.pointModifiers[FISH.EEL]);
+                Upgrades.GetUpgradeModifier(FISH.EEL));
 
-            sum += BoidsManager.molaCount *
+            sum += BoidsManager.MolaCount *
                 (fishPassivePoints[FISH.MOLA] *
-                Upgrades.pointModifiers[FISH.MOLA]);
+                Upgrades.GetUpgradeModifier(FISH.MOLA));
 
             Score += sum;
 

@@ -14,7 +14,6 @@ public class FishClick : Clickable
         this.clickSound = fishClick.sounds;
         this.volume = fishClick.soundVolume;
 
-        Time.timeScale = 1;
     }
 
     protected override void OnClick()
@@ -22,7 +21,11 @@ public class FishClick : Clickable
    
         if (timestamp+fishClick.coolDown <= Time.time)
         {
-            ScoreManager.Score += fishClick.reward * Upgrades.pointModifiers[fishClick.type];
+            ScoreManager.Score += fishClick.reward *
+               Upgrades.GetUpgradeModifier(fishClick.type);
+
+            Debug.Log(fishClick.reward *
+               Upgrades.GetUpgradeModifier(fishClick.type));
 
         timestamp = Time.time;
 

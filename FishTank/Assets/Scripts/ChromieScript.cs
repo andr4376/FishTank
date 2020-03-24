@@ -32,12 +32,12 @@ public class ChromieScript : BoidsAgent
 
     protected override void Init()
     {
-        BoidsManager.chromieCount++;
+        BoidsManager.ChromisCount++;
         base.Init();
     }
     private void OnDestroy()
     {
-        BoidsManager.chromieCount--;
+        BoidsManager.ChromisCount--;
 
     }
 }

@@ -119,6 +119,7 @@ SubShader{
 		
 		v2f o;
 		
+
 		// if (v.vertex.x> _HeadStart)
 		//(The start of the "spine")
 		// Move based on head movement factor

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1576271163044355220}
   - component: {fileID: 4246041500968573880}
   - component: {fileID: 8575791908142428112}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728533349418764759}
-  m_Layer: 0
+  - component: {fileID: -7452579986743342810}
+  - component: {fileID: -8182978895144901304}
+  m_Layer: 1
   m_Name: YellowAnemone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +113,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -34.812, y: 0, z: 0}
+--- !u!114 &-7452579986743342810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4343472115173260228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85dd4b137cc26284cb0c5ada531160c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 3d9c0b8123f432f42af5b5de12ebcb8c, type: 3}
+  volume: 0.075
+--- !u!135 &-8182978895144901304
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4343472115173260228}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &7917166192090870004
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +151,7 @@ GameObject:
   - component: {fileID: 2804343091352498617}
   - component: {fileID: 4330951454346455543}
   - component: {fileID: 3533944172089334857}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

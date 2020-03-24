@@ -11,7 +11,7 @@ public class BoidStats : MonoBehaviour
     public float speed;
     public float rotationSpeed;
     public float obstacleDetectionRange = 1;
-    public float friendDetectionRange = 1;
+    public float otherBoidsDetectionRange = 1;
     public float avoidanceRange = 1;
 
     [HideInInspector]
@@ -43,7 +43,7 @@ public class BoidStats : MonoBehaviour
 
         initialRrotationSpeed = rotationSpeed; 
         initialObstacleDetectionRange = obstacleDetectionRange;
-        initialGriendDetectionRange = friendDetectionRange;
+        initialGriendDetectionRange = otherBoidsDetectionRange;
     }
 
     private void OnDrawGizmosSelected()
@@ -52,7 +52,7 @@ public class BoidStats : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, avoidanceRange);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, friendDetectionRange);
+        Gizmos.DrawWireSphere(transform.position, otherBoidsDetectionRange);
     }
 
 }
