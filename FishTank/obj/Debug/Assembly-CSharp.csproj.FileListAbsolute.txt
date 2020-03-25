@@ -550,3 +550,5 @@ D:\Unity Projects\FishTankGit\FishTank\FishTank\obj\Debug\Assembly-CSharp.csproj
 D:\Unity Projects\FishTankGit\FishTank\FishTank\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\Unity Projects\FishTankGit\FishTank\FishTank\obj\Debug\Assembly-CSharp.dll
 D:\Unity Projects\FishTankGit\FishTank\FishTank\obj\Debug\Assembly-CSharp.pdb
+D:\Unity Projects\FishTankGit\FishTank\FishTank\Temp\bin\Debug\Unity.2D.Sprite.Editor.dll
+D:\Unity Projects\FishTankGit\FishTank\FishTank\Temp\bin\Debug\Unity.2D.Sprite.Editor.pdb

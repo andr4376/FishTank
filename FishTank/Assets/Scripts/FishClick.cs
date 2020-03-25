@@ -16,6 +16,8 @@ public class FishClick : Clickable
 
     }
 
+
+
     protected override void OnClick()
     {
    

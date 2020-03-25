@@ -1,11 +1,8 @@
-﻿//#define DEBUGGING
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if DEBUGGING
 [ExecuteAlways]
-#endif
 public class SetupOceanFloorScript : MonoBehaviour
 {
     [SerializeField]
@@ -13,7 +10,7 @@ public class SetupOceanFloorScript : MonoBehaviour
 
     [SerializeField] Vector3 scroll = new Vector3(-0.5f, -0.5f,0);
 
-    [SerializeField] Color lightColor = new Color(1,1,1,1);
+    public Color lightColor = new Color(1,1,1,1);
 
 
     // Start is called before the first frame update
@@ -25,7 +22,6 @@ public class SetupOceanFloorScript : MonoBehaviour
         Shader.SetGlobalColor("_LightColor", lightColor);
     }
 
-#if DEBUGGING
     // Update is called once per frame
     void Update()
     {
@@ -34,5 +30,4 @@ public class SetupOceanFloorScript : MonoBehaviour
         Shader.SetGlobalColor("_LightColor", lightColor);
 
     }
-#endif
 }

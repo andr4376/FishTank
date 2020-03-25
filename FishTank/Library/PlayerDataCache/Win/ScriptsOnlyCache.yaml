@@ -12,23 +12,28 @@ ScriptsOnlyBuild:
     - ChromieScript
     - Clickable
     - CorkScript
+    - DayAndNightScript
     - FishClick
     - FishMovementScript
     - FogController
     - MaterialRandomizer
     - MenuScript
+    - PixelThemeClick
     - PixelationEffect
     - PlayerLookScript
     - PlayerMovementScript
     - ScoreTextScript
     - ScriptableFishClick
+    - SettingsButton
     - SetupOceanFloorScript
     - SoundManager
+    - TimeSettings
     - ToggleMenuScript
     - UpgradeFishScript
     - VolumetricLightController
     - VolumetricLightScatteringCamera
     - VolumetricLightScatteringEffect
+    - WaterSurfaceScript
     - barracudaClick
     - directionalLightScript
     Unity.Rider.Editor.dll:
@@ -108,81 +113,91 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11526}
     - Class: 114
-      Script: {instanceID: 11696}
+      Script: {instanceID: 11588}
     - Class: 114
-      Script: {instanceID: 11712}
+      Script: {instanceID: 11698}
     - Class: 114
-      Script: {instanceID: 11724}
+      Script: {instanceID: 11714}
     - Class: 114
-      Script: {instanceID: 11822}
+      Script: {instanceID: 11726}
     - Class: 114
       Script: {instanceID: 11824}
     - Class: 114
-      Script: {instanceID: 11954}
+      Script: {instanceID: 11826}
     - Class: 114
-      Script: {instanceID: 11958}
+      Script: {instanceID: 11956}
     - Class: 114
-      Script: {instanceID: 11984}
+      Script: {instanceID: 11960}
     - Class: 114
-      Script: {instanceID: 11988}
+      Script: {instanceID: 11986}
     - Class: 114
-      Script: {instanceID: 12028}
+      Script: {instanceID: 11990}
     - Class: 114
-      Script: {instanceID: 12086}
+      Script: {instanceID: 12030}
     - Class: 114
-      Script: {instanceID: 12148}
+      Script: {instanceID: 12088}
     - Class: 114
-      Script: {instanceID: 12186}
+      Script: {instanceID: 12150}
     - Class: 114
-      Script: {instanceID: 12206}
+      Script: {instanceID: 12188}
     - Class: 114
-      Script: {instanceID: 12224}
+      Script: {instanceID: 12208}
     - Class: 114
-      Script: {instanceID: 12232}
+      Script: {instanceID: 12226}
     - Class: 114
-      Script: {instanceID: 12254}
+      Script: {instanceID: 12234}
     - Class: 114
-      Script: {instanceID: 12286}
+      Script: {instanceID: 12256}
     - Class: 114
-      Script: {instanceID: 12322}
+      Script: {instanceID: 12288}
     - Class: 114
-      Script: {instanceID: 12428}
+      Script: {instanceID: 12324}
     - Class: 114
-      Script: {instanceID: 12524}
+      Script: {instanceID: 12430}
     - Class: 114
-      Script: {instanceID: 12624}
+      Script: {instanceID: 12526}
     - Class: 114
-      Script: {instanceID: 12676}
+      Script: {instanceID: 12626}
     - Class: 114
-      Script: {instanceID: 12690}
+      Script: {instanceID: 12678}
     - Class: 114
-      Script: {instanceID: 12702}
+      Script: {instanceID: 12680}
     - Class: 114
-      Script: {instanceID: 12830}
+      Script: {instanceID: 12684}
     - Class: 114
-      Script: {instanceID: 12908}
+      Script: {instanceID: 12696}
     - Class: 114
-      Script: {instanceID: 12928}
+      Script: {instanceID: 12708}
     - Class: 114
-      Script: {instanceID: 12960}
+      Script: {instanceID: 12836}
     - Class: 114
-      Script: {instanceID: 12984}
+      Script: {instanceID: 12914}
     - Class: 114
-      Script: {instanceID: 13150}
+      Script: {instanceID: 12934}
     - Class: 114
-      Script: {instanceID: 13296}
+      Script: {instanceID: 12966}
     - Class: 114
-      Script: {instanceID: 13390}
+      Script: {instanceID: 12990}
     - Class: 114
-      Script: {instanceID: 76094}
+      Script: {instanceID: 13156}
     - Class: 114
-      Script: {instanceID: 141530}
+      Script: {instanceID: 13302}
     - Class: 114
-      Script: {instanceID: 141538}
+      Script: {instanceID: 13396}
     - Class: 114
-      Script: {instanceID: 162542}
+      Script: {instanceID: 13442}
     - Class: 114
-      Script: {instanceID: 255382}
+      Script: {instanceID: 13468}
+    - Class: 114
+      Script: {instanceID: 50314}
+    - Class: 114
+      Script: {instanceID: 68222}
+    - Class: 114
+      Script: {instanceID: 73508}
+    - Class: 114
+      Script: {instanceID: 279726}
+    - Class: 114
+      Script: {instanceID: 356314}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -318,6 +333,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GridLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: 62511deb5ff8e45cfc82e527395149db
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BuyFishScript
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -620,10 +641,22 @@ ScriptsOnlyBuild:
     className: HorizontalLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BackgroundMusicScript
+  - hash:
+      serializedVersion: 2
       Hash: 35a9693c388776aaf487636491a20f11
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MenuScript
   - hash:
       serializedVersion: 2
       Hash: e1300922cc039f41ab46a47f4cb05898
@@ -806,10 +839,22 @@ ScriptsOnlyBuild:
     className: Slider
   - hash:
       serializedVersion: 2
+      Hash: f9a7b8a41ad481f907bb0476a05f6a53
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ToggleMenuScript
+  - hash:
+      serializedVersion: 2
       Hash: 0fd6822f6177297bd0eb4d83cc7a9030
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ToggleGroup
+  - hash:
+      serializedVersion: 2
+      Hash: 62511deb5ff8e45cfc82e527395149db
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: UpgradeFishScript
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -821,31 +866,31 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: BackgroundMusicScript
+    className: SettingsButton
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: MenuScript
+    className: PixelThemeClick
   - hash:
       serializedVersion: 2
-      Hash: f9a7b8a41ad481f907bb0476a05f6a53
+      Hash: b04d965e6cf24c6b6b4c2287be82ecc7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ToggleMenuScript
+    className: DayAndNightScript
   - hash:
       serializedVersion: 2
-      Hash: 62511deb5ff8e45cfc82e527395149db
+      Hash: 25c391c825ebcd0d3d9622edd606cb84
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: BuyFishScript
+    className: WaterSurfaceScript
   - hash:
       serializedVersion: 2
-      Hash: 62511deb5ff8e45cfc82e527395149db
+      Hash: 86a37d820aeea367322ac3575868c9de
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: UpgradeFishScript
+    className: TimeSettings
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

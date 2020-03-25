@@ -18,7 +18,7 @@ public class FogController : MonoBehaviour
     [SerializeField] private Color _fogColor;
     [SerializeField] private bool useCamColor;
     [SerializeField] private float _fogStart = 0;
-    [SerializeField] private float _fogEnd = 150;
+    public float _fogEnd = 150;
     [SerializeField] private float _heightFogStart = 0;
     [SerializeField] private float _heightFogEnd = 10;
     [Range(0, 1)]
