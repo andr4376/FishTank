@@ -14,8 +14,8 @@ public class BuyFishScript : MonoBehaviour
 
     private readonly float fishPriceRiseModifier = 0.010f;
     private readonly float chromisBasePrice = 25;
-    private readonly float eelBasePrice = 50;
-    private readonly float molaBasePrice = 250;
+    private readonly float eelBasePrice = 250;
+    private readonly float molaBasePrice = 1000;
 
     private float myBasePrice;
     private float myPopulation;
@@ -127,7 +127,8 @@ public class BuyFishScript : MonoBehaviour
                 break;
         }
 
-        _priceText += Mathf.Round(Price).ToString("n");
+        _priceText += Mathf.Round(Price).ToString("0");
+
 
         priceText.text = _priceText;
 

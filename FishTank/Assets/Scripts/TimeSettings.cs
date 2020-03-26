@@ -11,4 +11,5 @@ public class TimeSettings : ScriptableObject
     public Color waterSurfaceColor;
     public Color oceanFloorColor;
     public float fogEnd;
+    public float timeModifier;
 }

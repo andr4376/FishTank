@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f4248acb54c8e42b58edec2d1b48fa, type: 3}
   m_Name: Day
   m_EditorClassIdentifier: 
-  dirLightColor: {r: 1, g: 0.9686275, b: 0.5137255, a: 0}
+  dirLightColor: {r: 1, g: 0.9686275, b: 0.5137255, a: 1}
   cameraColor: {r: 0.078431375, g: 0.87843144, b: 0.9725491, a: 0}
-  waterSurfaceColor: {r: 0, g: 0.9490197, b: 1, a: 0}
-  oceanFloorColor: {r: 1, g: 1, b: 1, a: 0}
+  waterSurfaceColor: {r: 0, g: 0.9490197, b: 1, a: 1}
+  oceanFloorColor: {r: 1, g: 1, b: 1, a: 1}
   fogEnd: 172
+  timeModifier: 1

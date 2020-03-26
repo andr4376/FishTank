@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TIME { NIGHT, DAY }
 public class DayAndNightScript : MonoBehaviour
 {
-    public TimeSettings day;
-    public TimeSettings night;
+    //Day, afternoon/morning, night
+    public TimeSettings[] timeSettings;
 
 
-
-    private TIME targetTime = TIME.NIGHT;
-
-    private float cycleSpeed = 0.003f;
+    [Range(0,0.003f)]
+    public float cycleSpeed = 0.003f;
 
     float closeEnough = 0.01f;
 
@@ -30,143 +27,105 @@ public class DayAndNightScript : MonoBehaviour
     [SerializeField]
     SetupOceanFloorScript oceanFloorScript;
 
+    //lerp time factor
     float t = 0.0f;
+
+    int currentIndex;
+    TimeSettings currentTarget;
+
+    //move from day => afternoon => night (true) or Night=>morning =>day (false)
+    bool ascending = true;
+    private bool shouldLerp = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
 
-        if(cam == null)
-        cam = Camera.main;
-              
-        if(dirLight == null)
-        dirLight = GameObject.Find("Directional Light").GetComponent<Light>();
-
-        if(fogController==null)
-        fogController = GameObject.Find("FogController").GetComponent<FogController>();
-
-        if(oceanFloorScript==null)
-        oceanFloorScript = GameObject.Find("OceanFloorLight").GetComponent<SetupOceanFloorScript>();
-        
-        if(watersurface==null)
-        watersurface = GameObject.Find("WaterSurface").GetComponent<WaterSurfaceScript>();
+        if (cam == null)
+            cam = Camera.main;
 
         if (dirLight == null)
-        {
-            Debug.LogError("dirlight null");
-        }
-        else
-        {
-            Debug.Log("dirlight ok");
-        }
+            dirLight = GameObject.Find("Directional Light").GetComponent<Light>();
+
         if (fogController == null)
-        {
-            Debug.LogError("fogController null");
-        }
-        else
-        {
-            Debug.Log("fogController ok");
-        }
+            fogController = GameObject.Find("FogController").GetComponent<FogController>();
+
         if (oceanFloorScript == null)
-        {
-            Debug.LogError("oceanFloorScript null");
-        }
-        else
-        {
-            Debug.Log("oceanFloorScript ok");
-        }
+            oceanFloorScript = GameObject.Find("OceanFloorLight").GetComponent<SetupOceanFloorScript>();
+
         if (watersurface == null)
-        {
-            Debug.LogError("watersurface null");
-        }
-        else
-        {
-            Debug.Log("watersurface ok");
-        }
+            watersurface = GameObject.Find("WaterSurface").GetComponent<WaterSurfaceScript>();
 
-        if (day == null)
-        {
-            Debug.Log("day is null");
 
-        }
+        currentIndex = 1;
+        currentTarget = timeSettings[currentIndex];
 
-        if (night == null)
-        {
-            Debug.Log("night is null");
+        StartCoroutine(StartInTime(30));
 
-        }
+    }
+
+    IEnumerator StartInTime(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        shouldLerp = true;
+
+        Debug.Log("Starting day and night cycle");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (shouldLerp)
+        {
 
-        t += Time.deltaTime * cycleSpeed;
+
+        t += Time.deltaTime * cycleSpeed *
+            currentTarget.timeModifier; //afternoons and mornings are quicker
 
         LerpTowardsTargetTime();
+        }
     }
 
     private void LerpTowardsTargetTime()
     {
+        //Fog distance
+        fogController._fogEnd =
+            Mathf.Lerp(fogController._fogEnd, currentTarget.fogEnd, t);
+        //light color
+        dirLight.color = Color.Lerp(dirLight.color,
+            currentTarget.dirLightColor, t);
+        //background / ocean and fog color
+        cam.backgroundColor = Color.Lerp(cam.backgroundColor,
+            currentTarget.cameraColor, t);
+        //surface color
+        watersurface.color = Color.Lerp(watersurface.color,
+            currentTarget.waterSurfaceColor, t);
+        //the light pattern on floor color
+        oceanFloorScript.lightColor = Color.Lerp(oceanFloorScript.lightColor,
+           currentTarget.oceanFloorColor, t);
 
-
-        if (targetTime == TIME.DAY)
+        //If lerped close enough
+        if (Mathf.Abs(currentTarget.fogEnd - fogController._fogEnd) < closeEnough)
         {
+            //if we have reached the end, turn back
+            if (ascending && currentIndex + 1 >= timeSettings.Length)
+                ascending = false;
 
+            if (!ascending && currentIndex - 1 < 0)
+                ascending = true;
 
-            fogController._fogEnd =
-                Mathf.Lerp(fogController._fogEnd, day.fogEnd, t);
+            //fx 1=>2 || 2=>1
+            currentIndex += ascending ? 1 : -1;
 
-            dirLight.color = Color.Lerp(dirLight.color,
-                day.dirLightColor, t);
+            currentTarget = timeSettings[currentIndex];
 
-            cam.backgroundColor = Color.Lerp(cam.backgroundColor,
-                day.cameraColor, t);
-
-            watersurface.color = Color.Lerp(watersurface.color,
-                day.waterSurfaceColor, t);
-
-            oceanFloorScript.lightColor = Color.Lerp(oceanFloorScript.lightColor,
-               day.oceanFloorColor, t);
-
-
-            if (Mathf.Abs(day.fogEnd - fogController._fogEnd) < closeEnough)
-            {
-                targetTime = TIME.NIGHT;
-
-                t = 0;
-            }
-        }
-
-        if (targetTime == TIME.NIGHT)
-        {
-
-
-            fogController._fogEnd =
-                Mathf.Lerp(fogController._fogEnd, night.fogEnd, t);
-
-            dirLight.color = Color.Lerp(dirLight.color,
-                night.dirLightColor, t);
-
-            cam.backgroundColor = Color.Lerp(cam.backgroundColor,
-                night.cameraColor, t);
-
-            watersurface.color = Color.Lerp(watersurface.color,
-                night.waterSurfaceColor, t);
-
-            oceanFloorScript.lightColor = Color.Lerp(oceanFloorScript.lightColor,
-               night.oceanFloorColor, t);
-
-
-            if (Mathf.Abs(night.fogEnd - fogController._fogEnd) < closeEnough)
-            {
-                targetTime = TIME.DAY;
-
-                t = 0;
-            }
+            t = 0;
         }
     }
+
+
 }
 
 

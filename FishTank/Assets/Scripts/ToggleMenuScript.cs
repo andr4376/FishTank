@@ -20,7 +20,8 @@ public class ToggleMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E))
+            Toggle();
     }
 
     public void Toggle()

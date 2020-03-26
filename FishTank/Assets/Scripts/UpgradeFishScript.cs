@@ -90,7 +90,7 @@ public class UpgradeFishScript : MonoBehaviour
         {
             
 
-            Upgrades.PointModifiers[fishType] +=  0.1f;
+            Upgrades.PointModifiers[fishType] +=  1f;
 
             ScoreManager.Score -= Price;
 
@@ -120,7 +120,7 @@ public class UpgradeFishScript : MonoBehaviour
         priceText.text = _priceText;
 
         currentUpgradeModifierText.text = 
-            "Lvl "+((int)(myCurrentModifier*10)).ToString();
+            "Lvl "+((int)(myCurrentModifier)).ToString();
 
     }
 

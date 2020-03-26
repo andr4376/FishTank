@@ -44,9 +44,9 @@ public static class ScoreManager
 
 
         fishPassivePoints = new Dictionary<FISH, float>() {
-            {FISH.CHROMIE,0.001f },
-            {FISH.MOLA,0.3f },
-            {FISH.EEL,0.05f },
+            {FISH.CHROMIE,0.05f },
+            {FISH.MOLA,3f },
+            {FISH.EEL,0.08f },
             {FISH.BARRACUDA,0}
         };
 
@@ -77,6 +77,7 @@ public static class ScoreManager
                 Upgrades.GetUpgradeModifier(FISH.MOLA));
 
             Score += sum;
+
 
             tickTS = Time.time;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PixelationEffect : MonoBehaviour
 {
 
-    private Material pixelationMaterial;
+    public Material pixelationMaterial;
 
     private const string resolutionKW = "_Resolution";
 
@@ -17,7 +17,16 @@ public class PixelationEffect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    private void OnEnable()
+    {
+        if (pixelationMaterial == null)
+        {
         pixelationMaterial = new Material(Shader.Find("FishTank/PixelationShader"));
+
+        }
 
         x = Screen.width * resolutionPercentage;
         y = Screen.height * resolutionPercentage;
@@ -28,10 +37,10 @@ public class PixelationEffect : MonoBehaviour
            ));
     }
 
-#if UNITY_EDITOR
 
     void Update()
     {
+        /*
         x = Screen.width * resolutionPercentage;
         y = Screen.height * resolutionPercentage;
 
@@ -39,8 +48,9 @@ public class PixelationEffect : MonoBehaviour
            x,
            y
            ));
+           */
     }
-#endif
+
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         if (pixelationMaterial == null)

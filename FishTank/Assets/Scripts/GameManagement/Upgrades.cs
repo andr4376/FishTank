@@ -41,8 +41,7 @@ public static class Upgrades
     /// <returns></returns>
     public static float GetUpgradeModifier(FISH fish)
     {
-        //fx "50% increase" => 1+(50 * 0,01) => 1.50
         //Fish point value * this
-        return 1 + (PointModifiers[fish] * 0.01f);
+        return 1 + (PointModifiers[fish] * 0.1f);
     }
 }

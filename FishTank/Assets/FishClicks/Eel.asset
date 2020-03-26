@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1374ebe39295f5f4cb759aa3acf0803f, type: 3}
   m_Name: Eel
   m_EditorClassIdentifier: 
-  reward: 3
+  reward: 50
   type: 1
   sounds: {fileID: 8300000, guid: 59979439c2a44f348b9d5c57fc091c1e, type: 3}
-  soundVolume: 0.12
+  soundVolume: 0.18
   coolDown: 1
