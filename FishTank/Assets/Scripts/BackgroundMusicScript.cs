@@ -14,12 +14,10 @@ public class BackgroundMusicScript : MonoBehaviour
     {
         aS = GetComponent<AudioSource>();
 
-        if (SaveManager.ValidSave)
-        {           
+                  
            aS.volume = SaveManager.Settings.musicVolume;
-        }
 
-        SaveManager.onSettingsChanged += delegate ()
+        SettingsUpdateScript.onSettingsChanged += delegate ()
         {
             UpdateVolume();
         };
@@ -28,7 +26,7 @@ public class BackgroundMusicScript : MonoBehaviour
 
     private void UpdateVolume()
     {
-        aS.volume = SaveManager.Settings.musicVolume;
+        aS.volume = 1 * SaveManager.Settings.musicVolume;
 
     }
 

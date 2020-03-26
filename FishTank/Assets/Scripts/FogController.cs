@@ -32,14 +32,12 @@ public class FogController : MonoBehaviour
         get
         {
             float fog = _fogEnd;
-            if (SaveManager.ValidSave)
-            {
+            
                 fog *= SaveManager.Settings.fogDistance;
 
                 if (fog <= _fogStart)
                     fog = _fogStart;
 
-            }
             return fog;
         }
     }

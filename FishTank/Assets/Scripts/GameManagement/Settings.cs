@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Settings 
 {
-    public float musicVolume = 1;
-    public float soundEffectVolume = 1;
+    public float musicVolume = 0.5f;
+    public float soundEffectVolume = 2.5f;
 
     public bool volumetricLighting = true;
 

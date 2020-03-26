@@ -1,9 +1,15 @@
 uniform sampler2D _OceanFloorTexture;
+uniform sampler2D _OceanFloorNoiseTexture;
+
 uniform float3 _TextureScroll;
+uniform float3 _OceanFloorNoiseScroll;
+
 uniform float4 _LightColor;
 
+uniform float _OceanFloorDistortion;
 
-#define TEX_SCALE 0.05
+
+#define TEX_SCALE 0.02
 
 //Unity functionality that assists with shadows and lighting
 #include "Lighting.cginc"
@@ -25,11 +31,21 @@ uniform float4 _LightColor;
 // of a forgiving lighting model.
 float4 GetOceanLight(fixed worldNormal, float3 worldPos, float shadow, float transparency = 1)
 {
+  //UV based on worldposition and texture scale
+  float2 uv = (worldPos.xz*TEX_SCALE);
+
+  //Sample from noise texture (for wave effect)
+  float noiseValue = tex2D(_OceanFloorNoiseTexture,uv).r;
+
+  //generate a wave like offset for the uv
+  float2 distortionOffset = uv+ noiseValue *
+   sin(_Time.yy * _OceanFloorNoiseScroll.xy)/_OceanFloorDistortion;
+
     //Get a sample from the ocean floor texture, based
-    //on the fragments world position (X & Z)
-    //TODO:  scale based on Y
+    //on the fragments world position (X & Z)    
     float4 oceanFloorTex = tex2D(_OceanFloorTexture,
-            (worldPos.xz*TEX_SCALE)+_TextureScroll.xy * _Time.yy);
+            (uv+_TextureScroll.xy * _Time.yy)
+            + distortionOffset); //add offset for a wavy/distorted effect
 
     //from 0-1, how much is the normal facing the light direction?
     float NormalDotLightDifference = max(0.0,dot(normalize(worldNormal),_WorldSpaceLightPos0));

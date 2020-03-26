@@ -40,16 +40,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 4f1e276129b5d0a42b77f5f7fcda564c, type: 3}
+        m_Scale: {x: 40, y: 40}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTexture:
-        m_Texture: {fileID: 2800000, guid: 4f1e276129b5d0a42b77f5f7fcda564c, type: 3}
-        m_Scale: {x: 40, y: 40}
+        m_Texture: {fileID: 2800000, guid: 6586875acae726c4e8580387e399bfc0, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -61,15 +61,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _ColorIntensity: 0.858
+    - _ColorIntensity: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _Distortion: 4.61
     - _DstBlend: 0
     - _Glosiness: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
+    - _Mitigation: 3.69
     - _Mode: 0
     - _NoiseShadowThreshold: 0
     - _NoiseTransparency: 1
@@ -81,13 +83,14 @@ Material:
     - _SpecularBlur: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TextureTransparency: 0
+    - _TextureTransparency: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0.94898295, b: 1, a: 0.999999}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _NoiseScrollSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _RimColor: {r: 0, g: 0, b: 0, a: 0}
-    - _ScrollSpeed: {r: 0.04, g: -0.04, b: 0, a: 0}
+    - _ScrollSpeed: {r: 0.1, g: -0.1, b: 0, a: 0}
     - _SpecularLightColor: {r: 1, g: 1, b: 1, a: 1}

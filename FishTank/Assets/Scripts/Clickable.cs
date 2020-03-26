@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Clickable : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class Clickable : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //If there's a ui panel on top of the clickable object
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         OnClick();
 
         

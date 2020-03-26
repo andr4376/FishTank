@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FishClick : Clickable
 {
     [SerializeField]
@@ -20,8 +21,9 @@ public class FishClick : Clickable
 
     protected override void OnClick()
     {
-   
-        if (timestamp+fishClick.coolDown <= Time.time)
+        
+
+            if (timestamp+fishClick.coolDown <= Time.time)
         {
             ScoreManager.Score += fishClick.reward *
                Upgrades.GetUpgradeModifier(fishClick.type);

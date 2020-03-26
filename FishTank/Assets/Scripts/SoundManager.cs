@@ -50,7 +50,6 @@ public class SoundManager : MonoBehaviour
     {
         aS = GetComponent<AudioSource>();
 
-        DontDestroyOnLoad(this.gameObject);
      
     }
 

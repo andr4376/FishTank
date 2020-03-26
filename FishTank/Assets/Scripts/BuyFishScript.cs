@@ -20,7 +20,7 @@ public class BuyFishScript : MonoBehaviour
     private float myBasePrice;
     private float myPopulation;
 
-
+    private bool initialized = false;
 
 
     private float Price
@@ -31,9 +31,13 @@ public class BuyFishScript : MonoBehaviour
                 * 1 + fishPriceRiseModifier);
         }
     }
+
+    
     // Start is called before the first frame update
+    
     void Start()
     {
+        
 
         switch (fishType)
         {
@@ -84,7 +88,10 @@ public class BuyFishScript : MonoBehaviour
                     continue;
                 }
             }
+
         }
+        UpdateText();
+
     }
     public void Buy()
     {

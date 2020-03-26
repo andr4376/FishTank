@@ -86,12 +86,14 @@ public class BaracudaScript : BoidsAgent
 
     private void Update()
     {
+        if(!SaveManager.Settings.peaceMode)
         Hunger -= hungerDrainrate * Time.deltaTime;
     }
 
     protected override bool PriorityBehaviour(List<BoidsAgent> boidsInRange)
     {
-
+        if (SaveManager.Settings.peaceMode)
+            return true;
 
         if (IsHungry)
         {

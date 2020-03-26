@@ -6,6 +6,7 @@ using UnityEngine;
 
 public static class SaveManager
 {
+
     private static SaveData save;
 
     private static string filepath = "/SaveData.save";
@@ -13,8 +14,7 @@ public static class SaveManager
     private static int tickAutosaveFrequency = 30; //seconds at the moment
     private static int tickCount = 0;
 
-    public delegate void OnSettingsChanged();
-    public static OnSettingsChanged onSettingsChanged;
+    
 
     public static SaveData Save
     {
@@ -51,15 +51,10 @@ public static class SaveManager
              {
                  AutoSave();
              };
-        }
+        }        
 
     }
-
-
-    public static void SettingsHasChanged()
-    {
-        onSettingsChanged?.Invoke();
-    }
+         
 
     public static void DeleteSave()
     {
@@ -68,6 +63,7 @@ public static class SaveManager
             File.Delete(filepath);
             Debug.LogWarning("Save file deleted!");
         }
+        
     }
 
     private static SaveData CreateSave()
