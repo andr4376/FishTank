@@ -359,7 +359,7 @@ struct BoidType
     public FISH type;
     public GameObject boid;
 
-    [Range(0, 100)]
+    [Range(0, 200)]
     public int spawnCount;
 
 }

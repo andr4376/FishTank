@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3491840327888062421}
-  m_Mesh: {fileID: 8552134717624371188, guid: 1bc3b73fbf849d945afb762d17114e40, type: 3}
+  m_Mesh: {fileID: 8552134717624371188, guid: d4e651f5d51c73049a0c2d6ba46ddb90, type: 3}
 --- !u!23 &3491840327888062423
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -176,6 +176,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.66877
       objectReference: {fileID: 0}
+    - target: {fileID: 4821238599028892799, guid: a0bf81579a2531144a6bbd76b7524952,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8552134717624371188, guid: 1bc3b73fbf849d945afb762d17114e40,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0bf81579a2531144a6bbd76b7524952, type: 3}
 --- !u!4 &6397170655073055560 stripped

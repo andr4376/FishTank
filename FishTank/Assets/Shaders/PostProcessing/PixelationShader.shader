@@ -1,5 +1,5 @@
 ﻿
-Shader "FishTank/PixelationShader"
+Shader "PostProcessing/PixelationShader"
 {
     Properties
     {

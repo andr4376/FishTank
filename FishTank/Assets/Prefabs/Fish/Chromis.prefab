@@ -115,9 +115,9 @@ MonoBehaviour:
   scaleRange: 0.426
   ingameScale: 0
   speed: 8
-  rotationSpeed: 1.8
+  rotationSpeed: 2
   obstacleDetectionRange: 20
-  otherBoidsDetectionRange: 15
+  otherBoidsDetectionRange: 20
   avoidanceRange: 1.5
   initialSpeed: 0
   initialRrotationSpeed: 0

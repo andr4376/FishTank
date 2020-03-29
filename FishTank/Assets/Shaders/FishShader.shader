@@ -133,8 +133,7 @@ SubShader{
 
 		//
 		//ELSE:
-		// Move based on X pos (the end of the tail moves more)
-				
+		// Move based on X pos (the end of the tail moves more)				
 		v.vertex.z +=	 
 			(sin(
 			(v.vertex.x-_HeadStart + _Time.x * _TailSpeed)*_TailFrequency)
@@ -144,14 +143,17 @@ SubShader{
 			* 
 			(v.vertex.x < _HeadStart);//1 if true 0 if false
 		//
-		
+
+		//Clip space position
 		o.pos = UnityObjectToClipPos(v.vertex);
+		
+		//Uv 
 		o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
-		//WORLD SPACE
+		//World space position
 		o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 
-		//Get normal
+		//Get world normal
 		o.worldNormal = UnityObjectToWorldNormal(v.normal);
 
 		//View Direction
