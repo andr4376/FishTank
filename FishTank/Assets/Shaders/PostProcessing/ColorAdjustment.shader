@@ -50,10 +50,15 @@
 				//Read the screen
                 fixed4 col = tex2D(_MainTex, i.uv);
 				
+                //Contrast
 				col.rgb = (col.rgb - 0.5) * _Contrast + 0.5;
-				col.rgb += _Brightness;
+				
+                //Brigtness
+                col.rgb += _Brightness;
 
+                //luminance factor for saturation
 				float luminance = (col.r * .3 + col.g * .59 + col.b * .11);
+                //lerp saturation
 				col.rgb = lerp(luminance, col.rgb, _Saturation);
                 return col;
             }

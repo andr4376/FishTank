@@ -12,6 +12,10 @@ public static class ScoreManager
     private static float tickInterval = 1;
     private static float tickTS;
 
+    private static float startScore = 50000;
+
+    public static float lastSum;
+
     /// <summary>
     /// A dictionary that dictates how many points the player get based on fish type
     /// </summary>
@@ -40,7 +44,7 @@ public static class ScoreManager
         if (SaveManager.ValidSave)
             Score = SaveManager.Save.score;
         else
-            Score = 0;
+            Score = 20000;
 
 
         fishPassivePoints = new Dictionary<FISH, float>() {
@@ -78,6 +82,7 @@ public static class ScoreManager
 
             Score += sum;
 
+            lastSum = sum;
 
             tickTS = Time.time;
 

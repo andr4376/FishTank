@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A chromis is a flocking fish that inherits from boidsagent
+/// it uses all the flocking behaviour, and its only extra behaviour is
+/// to swim away from barracudas
+/// </summary>
 public class ChromieScript : BoidsAgent
 {
    

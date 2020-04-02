@@ -121,9 +121,10 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
+                // Glass color
                 fixed4 col = _GlassColor;
 
+				//get light from FishTankLight.cginc
                 float4 light =
                GetLight(      
                     i.worldNormal,
@@ -137,6 +138,7 @@
                     _RimAmount,
                     _RimColor);	
 
+				//applyambient lighting
                 col*= light +_AmbientColor;
 
             // apply oceanLight (from OceanFloorLight.cginc)
@@ -146,6 +148,7 @@
 		            SHADOW_ATTENUATION(i),
 		            _OceanFloorTransparency);
                 
+				//apply fog and return output
                 return  ApplyFog(_GlassColor+col, i.worldPos);
             }
             ENDCG

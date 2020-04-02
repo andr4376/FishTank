@@ -37,10 +37,9 @@ public class PixelationEffect : MonoBehaviour
            ));
     }
 
-
+    /*
     void Update()
     {
-        /*
         x = Screen.width * resolutionPercentage;
         y = Screen.height * resolutionPercentage;
 
@@ -48,8 +47,7 @@ public class PixelationEffect : MonoBehaviour
            x,
            y
            ));
-           */
-    }
+    }*/
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {

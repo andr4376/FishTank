@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d638d179e9351e41a9b51757288fc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceSpeed: 4
+  bounceSpeed: 3
   bounceFrequency: 2
 --- !u!114 &8358647310416152046
 MonoBehaviour:
@@ -116,6 +116,9 @@ MonoBehaviour:
   ingameScale: 0
   speed: 8
   rotationSpeed: 2
+  maxSpeed: 10
+  minSpeed: 6
+  verticalRotationMultiplier: 30
   obstacleDetectionRange: 20
   otherBoidsDetectionRange: 20
   avoidanceRange: 1.5
@@ -123,9 +126,6 @@ MonoBehaviour:
   initialRrotationSpeed: 0
   initialObstacleDetectionRange: 1
   initialGriendDetectionRange: 1
-  maxSpeed: 10
-  minSpeed: 6
-  verticalRotationMultiplier: 30
 --- !u!135 &5511902232463923084
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -33,21 +33,64 @@
 
 //
 float4 LambertianDiffuse(      
-     float3 worldSpaceNormal,
-      float shadow,
-      float shadowEdgeBlur
+     float3 worldSpaceNormal,   //fragments normal vector in world space
+      float shadow,             //Whether or not the object is already in the shadows (From unity's functionality)
+      float shadowEdgeBlur      //the sharpness of the line between light and shadow on the model
        )
 {
-    
-	float lightDotNormal =max(dot(_WorldSpaceLightPos0,
-                             normalize(worldSpaceNormal)),0);			
-				
-	float lightIntensity
-             = smoothstep(0,shadowEdgeBlur, lightDotNormal * shadow);	
+    //1)
+    //compare the similarity of the direction of the normal to the direction towards the directional light
+    //by getting the DOT product.
+    //Both vectors should be normalized
+    //if the two vectors are the same, the output is 1, if the directions are oposite, the outcome is -1
+    //if the two vectors make a Right Angle, the outcome is 0.
 
-	float4 light = lightIntensity * _LightColor0;
+    /*  float dot(float4 a, float4 b)
+    {
+        return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
+    }
+    */
+    /* (y represents how much light should be applied):  
+                    y    
+            1       ^   (lit)
+            0.75    |   (lit)
+            0.5     |   (lit)
+            0.25    |   (lit)
+          <--0------|---(unlit)---> x
+            -0.25   |   (unlit)
+            -0.5    |   (unlit)
+            -0.75   |   (unlit)
+            -1      v   (unlit)
+    */
+
+    //Get dot product of the two directions, but limit darkness amount to 0
+	float lightDotNormal =max(dot
+                            (normalize(_WorldSpaceLightPos0),
+                             normalize(worldSpaceNormal)),0);			
 	
-    
+    //2) get light intensity:
+    //Smoothstep is a function that takes a min and a max value, and a third value
+    //that if it happens to be between min and max, it will smoothly interpolate 
+    //between the two, in a Sigmoid like curve. https://en.wikipedia.org/wiki/Sigmoid_function
+    //this means:
+    // if min= 0, max = 0.5
+    // if input = 1 => output 1
+    // if input = -1 => output 0
+    // if input = 0.4 => output 0.8-ish
+    // if input = 100 => output 1
+
+    //shadowEdgeBlue is often a very small number, and this is used to give 
+    //a very sharp shadow edge, but with a smooth transition
+    //everthing in the light is 1, and everything in the dark is 0.
+    //but the small line inbetween gets interpolated
+	float lightIntensity
+             = smoothstep(0,shadowEdgeBlur, lightDotNormal * shadow
+             /*Unity shadow system =>0 if in shadow, 1 if not*/);	
+
+
+    //Apply color.
+	float4 light = lightIntensity * _LightColor0;
+	    
     return  light;
 }
 
@@ -62,19 +105,25 @@ float4 SpecularLighting(
 
     float4 specular;
     
+    //diffuse
 	float NdotL = dot(_WorldSpaceLightPos0, normalize(worldSpaceNormal));		
 	float lightIntensity = smoothstep(0,0.01, NdotL * shadow);	
 
+    //dot from view direction and light direction
 	float3 halfVector = normalize(_WorldSpaceLightPos0 + normalize(viewDirection));
+
+    //dot from normaldirection and the halfvector
 	float NdotH = dot(normalize(worldSpaceNormal), halfVector);
 
-	// Multiply _Glossiness by itself to allow artist to use smaller
-	// glossiness values in the inspector.
+    //defines area that should be lit
 	float specularIntensity = pow
 	(NdotH * lightIntensity, glossiness);
+
+    //Make sharp, toonish line, as explained in the lambertian diffuse 
 	float specularIntensitySmooth =
      smoothstep(0.005, 0.01+(specularBlur*0.01), specularIntensity);
 
+    //apply color
 	 specular = specularIntensitySmooth * specularColor;	
 
     return specular;
@@ -114,8 +163,7 @@ float4 RimLighting(
                     normalize(viewDirection)
                     ,normalize(worldSpaceNormal));
 
-				// We only want rim to appear on the lit side of the surface,
-				// so multiply it by NdotL, raised to a power to smoothly blend it.
+				
 				float rimIntensity = rimDot * pow(NdotL, rimThreshold);
 				rimIntensity = smoothstep(rimAmount - 0.01,
                  rimAmount + 0.01, rimIntensity);

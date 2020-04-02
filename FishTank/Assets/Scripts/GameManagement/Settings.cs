@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A serializable class that contains info about the 
+/// audio, graphical and gameplay settings of the game
+/// </summary>
 [System.Serializable]
 public class Settings 
 {

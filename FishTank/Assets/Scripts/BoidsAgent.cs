@@ -8,12 +8,15 @@ using UnityEngine;
 [RequireComponent(typeof(BoidStats))]
 public class BoidsAgent : MonoBehaviour
 {
+    //stats of the boids, like speeds and ranges
     public BoidStats stats;
 
 #if DEBUG
+    //for visualization
     private Vector3 flockCenterMassPosition = Vector3.zero;
 #endif
 
+    //to what degree should this boid follow the rules? from 0-1
     public float cohesionFactor = 1, alignmentFactor = 1, avoidanceFactor = 1;
 
     public bool interactWithOtherBoids = true;
@@ -21,9 +24,16 @@ public class BoidsAgent : MonoBehaviour
     [Range(0, 1)]
     public float obstacleIgnorance = 1;
 
+    /// <summary>
+    /// Physics layers for obstacles to avoid
+    /// </summary>
+    [SerializeField]
+    private LayerMask obstacleLayer;
 
     static private Transform _boidAnchor;
-
+    /// <summary>
+    /// Anchor in Hierachy to avoid clutter
+    /// </summary>
     static Transform BoidAnchor
     {
         get
@@ -37,8 +47,6 @@ public class BoidsAgent : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private LayerMask obstacleLayer;
 
 
     // Start is called before the first frame update
@@ -88,7 +96,7 @@ public class BoidsAgent : MonoBehaviour
 
             foreach (BoidsAgent item in otherBoids)
             {
-                if (item!= this && Vector3.Distance(transform.position, item.transform.position) <=
+                if (item != this && Vector3.Distance(transform.position, item.transform.position) <=
                 stats.otherBoidsDetectionRange)
                 {
                     boidsInRange.Add(item);
@@ -249,6 +257,11 @@ public class BoidsAgent : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Cast rays UP, RIGHT, LEFT, DOWN and CENTER to detect obstacles, and 
+    /// dodge accordingly
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool ObstacleDetection()
     {
         /*
@@ -467,12 +480,17 @@ public class BoidsAgent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// moves towards a normalized direction vector
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="modifier"></param>
     protected void SteerInDirection(Vector3 point, float modifier = 1)
     {
         if (Mathf.Approximately(modifier, 0))
             return;
-
-        point.Normalize();
+        if (point.magnitude > 1)
+            point.Normalize();
 
         transform.right = Vector3.Lerp(
             transform.right, point, stats.rotationSpeed * modifier * Time.deltaTime);
@@ -494,10 +512,14 @@ public class BoidsAgent : MonoBehaviour
             */
     }
 
+    /// <summary>
+    /// moves towards a world position
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="modifier"></param>
     protected void SteerTowards(Vector3 point, float modifier = 1)
     {
         point = point - transform.position;
-        point.Normalize();
 
         SteerInDirection(point, modifier);
     }

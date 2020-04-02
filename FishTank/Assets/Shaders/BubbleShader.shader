@@ -1,5 +1,9 @@
 ﻿Shader "FishTank/BubbleShader"
 {
+	/*
+	A simple transparent shader that are meant to draw 2d billbord bubbles
+	for the particle systems
+	*/
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
@@ -47,9 +51,13 @@
             v2f vert (appdata v)
             {
                 v2f o;
+				//Clip position
                 o.vertex = UnityObjectToClipPos(v.vertex);
+
+				//Uv for bubble texture
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
+				//World position for fog
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 
                 return o;
@@ -59,9 +67,11 @@
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv) * _TextureTransparency;
-
+				
+				//the sprites are white, so i can apply color multiplicatively
                 col *= _BubbleColor;
 
+				//apply fog from my fog.cginc file
                 col = ApplyFog(col, i.worldPos);
                 return col;
             }

@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 1900
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -61,7 +61,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FillAmount: 3.0028543
+    - _FillAmount: 3.005828
+    - _FoamHeight: 0.261
     - _Glosiness: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -88,7 +89,10 @@ Material:
     - _AmbientColor: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 0.12549019, b: 0.18221119, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 1, g: 0.3820755, b: 0.39015302, a: 1}
+    - _FoamColor: {r: 0.6981132, g: 0.10208259, b: 0.10962721, a: 1}
+    - _FoamSideColor: {r: 0.6792453, g: 0.0993236, b: 0.0993236, a: 1}
+    - _FoamTopColor: {r: 0.9811321, g: 0.39337844, b: 0.39337844, a: 1}
+    - _LiquidColor: {r: 1, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.5754717, g: 0, b: 0, a: 1}
     - _SpecularLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tint: {r: 1, g: 0, b: 0, a: 1}

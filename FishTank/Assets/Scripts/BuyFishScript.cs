@@ -13,7 +13,7 @@ public class BuyFishScript : MonoBehaviour
     private FISH fishType;
 
     private readonly float fishPriceRiseModifier = 0.010f;
-    private readonly float chromisBasePrice = 25;
+    private readonly float chromisBasePrice = 10;
     private readonly float eelBasePrice = 250;
     private readonly float molaBasePrice = 1000;
 

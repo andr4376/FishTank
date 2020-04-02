@@ -47,9 +47,10 @@ Shader "PostProcessing/PixelationShader"
             {
                 float2 uv = i.uv;
 
-                uv.x *= _Resolution.x;
-                uv.y   *= _Resolution.y;
+                uv.x	*= _Resolution.x;
+                uv.y    *= _Resolution.y;
 
+				//to int
                 uv.x = floor(uv.x);
                 uv.y = floor(uv.y);
 
